@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import { genericReset } from "./reset.styles";
 
 export const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
   body, h1, h2, h3, h4, h5, h6,
   blockquote, p, pre,
   dl, dd, ol, ul,

@@ -12,6 +12,7 @@ export const Container = styled.div`
   height: 400px;
   width: 400px;
   margin: 200px auto;
-  border: 0.897211px solid #ebecf2;
+  border: 0.897211px solid ${({ theme }) => theme.colors.signUp.borderContainer};
   border-radius: 13.2458px;
+  padding: 0 24px;
 `;

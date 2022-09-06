@@ -8,6 +8,7 @@ export const theme = {
       singUpButton: "#CBADEB",
       singUpText: "#7F59A6",
       borderContainer: "#ebecf2",
+      inputText: "#4A4A4D",
     },
   },
 };
@@ -21,7 +22,8 @@ export const antiTheme = {
       inputColor: "#5B5C63",
       singUpButton: "#00875F",
       singUpText: "#F7F7F8",
-      borderContainer: "",
+      borderContainer: "#202024",
+      inputText: "#F7F7F8",
     },
   },
 };
