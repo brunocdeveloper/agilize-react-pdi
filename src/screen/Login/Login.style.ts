@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { space } from "styled-system";
 
-export const Container = styled.div`
+export const Container: any = styled.div`
   width: 200px;
   background-color: ${({ theme }) => theme.colors.signUp.container};
   box-shadow: 0px 165.572px 132.458px rgba(0, 0, 0, 0.07),
@@ -12,6 +13,7 @@ export const Container = styled.div`
   height: 400px;
   width: 400px;
   margin: 200px auto;
+  ${space};
   border: 0.897211px solid ${({ theme }) => theme.colors.signUp.borderContainer};
   border-radius: 13.2458px;
   padding: 0 24px;

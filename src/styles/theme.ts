@@ -1,6 +1,7 @@
 export const theme = {
   colors: {
     body: "#7E40BF",
+    white: "#FDFDFF",
     signUp: {
       container: "#FDFDFF",
       labelInput: "#89898F",
@@ -16,6 +17,7 @@ export const theme = {
 export const antiTheme = {
   colors: {
     body: "#4C2673",
+    white: "#FDFDFF",
     signUp: {
       container: "#202024",
       labelInput: "#F7F7F8",

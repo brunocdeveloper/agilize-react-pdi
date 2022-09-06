@@ -9,8 +9,9 @@ import {
   space,
   width,
 } from "styled-system";
+import { InputProps } from "./Input.types";
 
-export const InputText = styled.input`
+export const InputText: any = styled.input<InputProps>`
   ${maxHeight};
   ${width};
   ${space};

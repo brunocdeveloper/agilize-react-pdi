@@ -7,6 +7,7 @@ import {
   BorderRadiusProps,
   FontWeightProps,
   FontSizeProps,
+  BackgroundColorProps,
 } from "styled-system";
 
 export interface ButtonProps
@@ -16,7 +17,11 @@ export interface ButtonProps
     WidthProps,
     BorderRadiusProps,
     FontWeightProps,
+    BackgroundColorProps,
     HeightProps {
   text?: React.ReactNode | React.ReactElement | string;
   teacherBtn?: boolean;
+  backgroundColor?: string;
+  onClick?: (event?: React.ChangeEvent<any>) => void;
+  type?: string;
 }

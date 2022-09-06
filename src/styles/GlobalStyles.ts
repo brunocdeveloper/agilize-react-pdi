@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { genericReset } from "./reset.styles";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -21,6 +20,11 @@ export const GlobalStyle = createGlobalStyle`
     ul {
       margin-bottom: 0;
     }
+  }
+
+  :focus {
+    outline: transparent;
+    box-shadow: none;
   }
 
   table {

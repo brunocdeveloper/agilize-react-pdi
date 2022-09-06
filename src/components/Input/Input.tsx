@@ -3,11 +3,12 @@ import { InputText, Label } from "./Input.styles";
 import { InputProps } from "./Input.types";
 
 const Input = (props: InputProps) => {
-  const { label, ...rest } = props;
+  const { label, value, ...rest } = props;
+  console.log(value);
   return (
     <div>
       {label && <Label>{label}</Label>}
-      <InputText type="text" {...rest} />
+      <InputText type="text" value={value} {...rest} />
     </div>
   );
 };
