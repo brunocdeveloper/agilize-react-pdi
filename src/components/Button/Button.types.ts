@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import {
   ColorProps,
   SpaceProps,
@@ -20,6 +20,7 @@ export interface ButtonProps
     BackgroundColorProps,
     HeightProps {
   text?: React.ReactNode | React.ReactElement | string;
+  loading?: React.ReactElement | boolean;
   teacherBtn?: boolean;
   backgroundColor?: string;
   onClick?: (event?: React.ChangeEvent<any>) => void;

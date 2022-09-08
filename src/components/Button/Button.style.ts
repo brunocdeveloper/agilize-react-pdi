@@ -23,7 +23,6 @@ export const StyledButton: any = styled.button<ButtonProps>`
   color: ${({ theme }) => theme.colors.signUp.singUpText};
   transition: background-color 0.2s ease-in-out;
   background-color: ${(props) => props.backgroundColor || "transparent"};
-
   ${(props) =>
     props.teacherBtn &&
     css`

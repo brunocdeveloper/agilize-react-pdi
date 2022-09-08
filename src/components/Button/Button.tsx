@@ -1,10 +1,19 @@
 import React from "react";
+import Box from "../Box/Box";
+import Text from "../Text/Text";
 import { StyledButton } from "./Button.style";
 import { ButtonProps } from "./Button.types";
 
 const Button = (props: ButtonProps) => {
-  const { text, ...rest } = props;
-  return <StyledButton {...rest}>{text}</StyledButton>;
+  const { text, loading, ...rest } = props;
+  return (
+    <StyledButton {...rest}>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Text text={text} />
+        {loading && <Box ml="12px">{loading}</Box>}
+      </Box>
+    </StyledButton>
+  );
 };
 
 export default Button;

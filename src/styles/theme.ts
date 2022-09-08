@@ -2,6 +2,8 @@ export const theme = {
   colors: {
     body: "#7E40BF",
     white: "#FDFDFF",
+    correctlyQuestion: "#008000",
+    incorrectlyQuestion: "#e32636",
     signUp: {
       container: "#FDFDFF",
       labelInput: "#89898F",
@@ -18,6 +20,8 @@ export const antiTheme = {
   colors: {
     body: "#4C2673",
     white: "#FDFDFF",
+    correctlyQuestion: "#008000",
+    incorrectlyQuestion: "#e32636",
     signUp: {
       container: "#202024",
       labelInput: "#F7F7F8",

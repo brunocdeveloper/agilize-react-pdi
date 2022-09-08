@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  alignItems,
   backgroundColor,
   borderRadius,
   color,
@@ -18,5 +19,6 @@ export const Container: any = styled.div`
   ${height};
   ${width};
   ${borderRadius};
+  ${alignItems};
   transition: background-color 0.2s ease-in-out;
 `;

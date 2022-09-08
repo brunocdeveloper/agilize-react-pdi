@@ -6,6 +6,7 @@ import Input from "../../components/Input/Input";
 import Text from "../../components/Text/Text";
 import { Container } from "../Login/Login.style";
 import CadastroAluno from "./Cadastro/CadastroAluno";
+import CadastroQuestoes from "./CadastroQuestoes/CadastroQuestoes";
 import StepIndicator from "./StepIndicator/StepIndicator";
 
 const Professor = () => {
@@ -27,7 +28,21 @@ const Professor = () => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent="center" mt={100}>
+      <Box
+        height={60}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        padding={20}
+      >
+        <Text
+          text="Bem vindo professor!"
+          color={theme.colors.white}
+          fontWeight="bold"
+        />
+        <Text text="sair" color={theme.colors.white} fontWeight="bold" />
+      </Box>
+      <Box display="flex" justifyContent="center" mt={30}>
         <StepIndicator
           steperProfessor={stepProfessor}
           setSteperProfessor={setStepProfessor}
@@ -42,6 +57,8 @@ const Professor = () => {
           saveAutentication={saveAutentication}
         />
       )}
+
+      {stepProfessor === "questoes" && <CadastroQuestoes />}
     </Box>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ColorProps,
   DisplayProps,
@@ -16,5 +17,5 @@ export interface TextProps
     ColorProps,
     FontWeightProps,
     FontSizeProps {
-  text?: string;
+  text?: string | React.ReactElement | React.ReactNode;
 }

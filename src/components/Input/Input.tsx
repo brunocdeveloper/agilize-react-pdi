@@ -4,7 +4,6 @@ import { InputProps } from "./Input.types";
 
 const Input = (props: InputProps) => {
   const { label, value, ...rest } = props;
-  console.log(value);
   return (
     <div>
       {label && <Label>{label}</Label>}

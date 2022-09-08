@@ -1,5 +1,7 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
+  border,
+  borderColor,
   borderRadius,
   color,
   fontSize,
@@ -25,6 +27,18 @@ export const InputText: any = styled.input<InputProps>`
   border-radius: 8px;
   padding: 0 12px;
   color: ${({ theme }) => theme.colors.signUp.inputText};
+
+  ${({ correctlyQuestion, theme }) =>
+    correctlyQuestion &&
+    css`
+      border: 2px solid ${theme.colors.correctlyQuestion};
+    `}
+
+  ${({ incorrectlyQuestion, theme }) =>
+    incorrectlyQuestion &&
+    css`
+      border: 2px solid ${theme.colors.incorrectlyQuestion};
+    `}
 
   :focus {
     outline: none;

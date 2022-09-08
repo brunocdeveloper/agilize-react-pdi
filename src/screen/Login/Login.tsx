@@ -1,29 +1,46 @@
+import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import Box from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-
-import { Container } from "./Login.style";
+import { instanceAxios } from "../../utils/Axios/axios";
+import { Container, StyledLoader } from "./Login.style";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Login = () => {
   const theme = useTheme();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isProfessor, setIsProfessor] = useState(true);
+  const [loadingFetch, setLoadingFetch] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = useCallback(() => {
-    console.log(username, password);
-    navigate("/adm");
+  const toggleProfessorAluno = () => {
+    setIsProfessor(!isProfessor);
+    setUsername("");
+    setPassword("");
+  };
+
+  const handleSubmit = useCallback(async () => {
+    setLoadingFetch(true);
+    const {
+      data: { data },
+    } = await instanceAxios.get("/login");
+    setLoadingFetch(false);
+    if (isProfessor && data.user === username && data.password === password) {
+      navigate("/adm");
+    }
   }, [username, password]);
 
   return (
-    <Container>
+    <Container mt={180}>
       <Box display="flex" justifyContent="flex-end">
         <Button
           mt={40}
-          text="Sou professor"
+          text={(isProfessor && "Sou aluno") || "Sou professor"}
+          onClick={toggleProfessorAluno}
           width={155}
           height={40}
           borderRadius={8}
@@ -36,20 +53,22 @@ const Login = () => {
       <Box mt={20}>
         <Input
           onChange={({ target }) => setUsername(target.value)}
-          label="Usuário"
+          label={(isProfessor && "Usuário do professor") || "Usuário do aluno"}
           width={350}
           height={40}
           fontSize={16}
+          value={username}
         />
       </Box>
       <Box mt={30}>
         <Input
           onChange={({ target }) => setPassword(target.value)}
-          label="Senha"
+          label={(isProfessor && "Senha do professor") || "Senha do aluno"}
           width={350}
           height={40}
           fontSize={16}
           type="password"
+          value={password}
         />
       </Box>
       <Box display="flex" justifyContent="center">
@@ -64,6 +83,9 @@ const Login = () => {
           fontSize={18}
           color={theme.colors.signUp.singUpText}
           teacherBtn
+          loading={
+            loadingFetch && <CircularProgress size="18px" color="inherit" />
+          }
         />
       </Box>
     </Container>
