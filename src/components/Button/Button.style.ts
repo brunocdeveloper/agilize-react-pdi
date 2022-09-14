@@ -18,7 +18,8 @@ export const StyledButton: any = styled.button<ButtonProps>`
   ${borderRadius};
   ${fontWeight};
   ${fontSize};
-  border: 2px solid ${({ theme }) => theme.colors.signUp.singUpButton};
+  border: 2px solid
+    ${({ border, theme }) => border || theme.colors.signUp.singUpButton};
   font-family: "Inter", sans-serif;
   color: ${({ theme }) => theme.colors.signUp.singUpText};
   transition: background-color 0.2s ease-in-out;
@@ -30,6 +31,14 @@ export const StyledButton: any = styled.button<ButtonProps>`
         background-color: ${({ theme }) => theme.colors.signUp.singUpButton};
         color: ${({ theme }) => theme.colors.signUp.singUpText};
         font-weight: bold;
+      }
+    `};
+
+  ${(props) =>
+    props.opacityOnClick &&
+    css`
+      &:hover {
+        opacity: 0.6;
       }
     `};
 `;

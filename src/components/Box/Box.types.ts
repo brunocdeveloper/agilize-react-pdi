@@ -8,6 +8,7 @@ import {
   WidthProps,
   BorderRadiusProps,
   AlignItemsProps,
+  FlexDirectionProps,
 } from "styled-system";
 
 export interface BoxProps
@@ -18,7 +19,9 @@ export interface BoxProps
     WidthProps,
     BorderRadiusProps,
     AlignItemsProps,
+    FlexDirectionProps,
     JustifyContentProps {
   children?: React.ReactElement | React.ReactNode;
   onClick?: () => void;
+  scrollY?: boolean;
 }

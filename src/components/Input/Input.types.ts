@@ -19,4 +19,5 @@ export interface InputProps
   placeholder?: string;
   correctlyQuestion?: boolean;
   incorrectlyQuestion?: boolean;
+  error?: string | undefined;
 }

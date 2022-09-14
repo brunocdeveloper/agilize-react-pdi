@@ -7,7 +7,7 @@ import PublicRoutes from "./routes/PublicRoutes.js";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={antiTheme}>
       <GlobalStyle />
       <PublicRoutes />
     </ThemeProvider>

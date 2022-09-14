@@ -22,7 +22,10 @@ export interface ButtonProps
   text?: React.ReactNode | React.ReactElement | string;
   loading?: React.ReactElement | boolean;
   teacherBtn?: boolean;
+  opacityOnClick?: boolean;
   backgroundColor?: string;
   onClick?: (event?: React.ChangeEvent<any>) => void;
   type?: string;
+  children?: React.ReactNode | React.ReactElement;
+  border?: string;
 }

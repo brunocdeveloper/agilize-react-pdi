@@ -8,6 +8,8 @@ import Input from "../../components/Input/Input";
 import { instanceAxios } from "../../utils/Axios/axios";
 import { Container, StyledLoader } from "./Login.style";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 const Login = () => {
   const theme = useTheme();
@@ -15,6 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isProfessor, setIsProfessor] = useState(true);
   const [loadingFetch, setLoadingFetch] = useState(false);
+  const [statusFetching, setStatusFetching] = useState(200);
   const navigate = useNavigate();
 
   const toggleProfessorAluno = () => {
@@ -26,9 +29,11 @@ const Login = () => {
   const handleSubmit = useCallback(async () => {
     setLoadingFetch(true);
     const {
+      status,
       data: { data },
     } = await instanceAxios.get("/login");
     setLoadingFetch(false);
+    setStatusFetching(status);
     if (isProfessor && data.user === username && data.password === password) {
       navigate("/adm");
     }

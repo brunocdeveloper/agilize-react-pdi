@@ -6,7 +6,7 @@ import Input from "../../components/Input/Input";
 import Text from "../../components/Text/Text";
 import { Container } from "../Login/Login.style";
 import CadastroAluno from "./Cadastro/CadastroAluno";
-import CadastroQuestoes from "./CadastroQuestoes/CadastroQuestoes";
+import CadastroQuestoes from "./CadastroQuestoeseProvas/CadastroQuestoes";
 import StepIndicator from "./StepIndicator/StepIndicator";
 
 const Professor = () => {
@@ -20,7 +20,8 @@ const Professor = () => {
       username,
       password,
     };
-    localStorage.setItem("credentials", JSON.stringify(credentials));
+    localStorage.setItem("aluno", JSON.stringify(credentials));
+
     setUsername("");
     setPassword("");
     event.preventDefault();
@@ -54,7 +55,7 @@ const Professor = () => {
           password={password}
           setPassword={setPassword}
           setUsername={setUsername}
-          saveAutentication={saveAutentication}
+          saveAutentication={(e) => saveAutentication(e)}
         />
       )}
 
