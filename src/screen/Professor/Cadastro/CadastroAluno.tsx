@@ -15,11 +15,10 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({
     mode: "onSubmit",
   });
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [createUser, setCreateUser] = useState(false);
   const theme = useTheme();
 
@@ -36,7 +35,6 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
       ...data,
       isAluno: true,
     };
-
     if (localStorage.getItem("alunos") !== null) {
       const alunos = localStorage.getItem("alunos") || "";
       localStorage.setItem(
@@ -50,6 +48,10 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
     }
 
     handleSuccesCreate();
+    reset({
+      username: "",
+      password: "",
+    });
   };
 
   return (

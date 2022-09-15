@@ -19,6 +19,7 @@ const CadastroQuestoes: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({
     mode: "onSubmit",
   });
@@ -45,6 +46,15 @@ const CadastroQuestoes: React.FC = () => {
       localStorage.setItem("questoes", JSON.stringify(newQuestao));
       setQuestoesCadastradas(newQuestao);
     }
+    reset({
+      questao: "",
+      tema: "",
+      questaoCorreta: "",
+      alternativaFalsaA: "",
+      alternativaFalsaB: "",
+      alternativaFalsaC: "",
+      alternativaFalsaD: "",
+    });
   };
 
   const deleteQuestao = (id: string) => {
@@ -60,156 +70,155 @@ const CadastroQuestoes: React.FC = () => {
   return (
     <Box display="flex" justifyContent="center" mt={50} mb={40}>
       <Container width={700} height={730}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Box display="flex" justifyContent="flex-start" mt={20}>
-            <Text
-              text="Cadastre questões"
-              color={theme.colors.signUp.singUpText}
-              fontSize={20}
-              fontWeight="bold"
-            />
-          </Box>
-          <Box mt={20}>
-            <Label>Digite aqui a questão</Label>
-            <Controller
-              name="questao"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <TextArea
-                  onChange={onChange}
-                  value={value}
-                  error={errors?.questao?.message}
-                  placeholder={errors?.questao?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="tema"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Digite aqui o tema da questão"
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  onChange={onChange}
-                  value={value}
-                  error={errors?.tema?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="questaoCorreta"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  label="Digite aqui a alternativa correta"
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  correctlyQuestion
-                  error={errors?.questaoCorreta?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="alternativaFalsaA"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  label="Digite abaixo qual serão as alternativas falsas"
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  incorrectlyQuestion
-                  error={errors?.alternativaFalsaA?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="alternativaFalsaB"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  incorrectlyQuestion
-                  error={errors?.alternativaFalsaB?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="alternativaFalsaC"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  incorrectlyQuestion
-                  error={errors?.alternativaFalsaC?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={20}>
-            <Controller
-              name="alternativaFalsaD"
-              control={control}
-              rules={{ required: "Campo obrigatório" }}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  width="100%"
-                  height={40}
-                  fontSize={16}
-                  incorrectlyQuestion
-                  error={errors?.alternativaFalsaD?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <Button
-              type="submit"
-              mt={40}
-              text="Criar"
-              width={350}
-              height={60}
-              borderRadius={8}
-              fontWeight="bold"
-              fontSize={18}
-              color={theme.colors.signUp.singUpText}
-              teacherBtn
-            />
-          </Box>
-        </form>
+        <Box display="flex" justifyContent="flex-start" mt={20}>
+          <Text
+            text="Cadastre questões"
+            color={theme.colors.signUp.singUpText}
+            fontSize={20}
+            fontWeight="bold"
+          />
+        </Box>
+        <Box mt={20}>
+          <Label>Digite aqui a questão</Label>
+          <Controller
+            name="questao"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <TextArea
+                onChange={onChange}
+                error={errors?.questao?.message}
+                placeholder={errors?.questao?.message}
+                value={value}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="tema"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label="Digite aqui o tema da questão"
+                width="100%"
+                height={40}
+                fontSize={16}
+                onChange={onChange}
+                value={value}
+                error={errors?.tema?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="questaoCorreta"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                onChange={onChange}
+                value={value}
+                label="Digite aqui a alternativa correta"
+                width="100%"
+                height={40}
+                fontSize={16}
+                correctlyQuestion
+                error={errors?.questaoCorreta?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="alternativaFalsaA"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                onChange={onChange}
+                value={value}
+                label="Digite abaixo qual serão as alternativas falsas"
+                width="100%"
+                height={40}
+                fontSize={16}
+                incorrectlyQuestion
+                error={errors?.alternativaFalsaA?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="alternativaFalsaB"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                onChange={onChange}
+                value={value}
+                width="100%"
+                height={40}
+                fontSize={16}
+                incorrectlyQuestion
+                error={errors?.alternativaFalsaB?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="alternativaFalsaC"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                onChange={onChange}
+                value={value}
+                width="100%"
+                height={40}
+                fontSize={16}
+                incorrectlyQuestion
+                error={errors?.alternativaFalsaC?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box mt={20}>
+          <Controller
+            name="alternativaFalsaD"
+            control={control}
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                onChange={onChange}
+                value={value}
+                width="100%"
+                height={40}
+                fontSize={16}
+                incorrectlyQuestion
+                error={errors?.alternativaFalsaD?.message}
+              />
+            )}
+          />
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            type="submit"
+            mt={40}
+            text="Criar"
+            width={350}
+            height={60}
+            borderRadius={8}
+            fontWeight="bold"
+            fontSize={18}
+            color={theme.colors.signUp.singUpText}
+            teacherBtn
+          />
+        </Box>
       </Container>
 
       <Container height={730} width={450}>
