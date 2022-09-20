@@ -18,4 +18,5 @@ export interface TextProps
     FontWeightProps,
     FontSizeProps {
   text?: string | React.ReactElement | React.ReactNode;
+  onClick?: (event?: React.ChangeEvent<any>) => void;
 }

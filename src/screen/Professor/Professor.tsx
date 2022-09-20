@@ -5,7 +5,8 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Text from "../../components/Text/Text";
 import { Container } from "../Login/Login.style";
-import CadastroAluno from "./Cadastro/CadastroAluno";
+import AplicarProvas from "./AplicarProvas/AplicarProvas";
+import CadastroAluno from "./CadastroAlunos/CadastroAluno";
 import CadastroQuestoes from "./CadastroQuestoeseProvas/CadastroQuestoes";
 import StepIndicator from "./StepIndicator/StepIndicator";
 
@@ -30,20 +31,15 @@ const Professor = () => {
   return (
     <Box>
       <Box
-        height={60}
+        height={20}
         display="flex"
         alignItems="center"
-        justifyContent="space-between"
-        padding={20}
+        justifyContent="flex-end"
+        padding={25}
       >
-        <Text
-          text="Bem vindo professor!"
-          color={theme.colors.white}
-          fontWeight="bold"
-        />
-        <Text text="sair" color={theme.colors.white} fontWeight="bold" />
+        <Text text="Sair" color={theme.colors.white} fontWeight="bold" />
       </Box>
-      <Box display="flex" justifyContent="center" mt={30}>
+      <Box display="flex" justifyContent="center">
         <StepIndicator
           steperProfessor={stepProfessor}
           setSteperProfessor={setStepProfessor}
@@ -60,6 +56,7 @@ const Professor = () => {
       )}
 
       {stepProfessor === "questoes" && <CadastroQuestoes />}
+      {stepProfessor === "aplicarProvas" && <AplicarProvas />}
     </Box>
   );
 };

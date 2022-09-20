@@ -1,3 +1,4 @@
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import {
   BorderColorProps,
   FontSizeProps,
@@ -19,5 +20,5 @@ export interface InputProps
   placeholder?: string;
   correctlyQuestion?: boolean;
   incorrectlyQuestion?: boolean;
-  error?: string | undefined;
+  error?: any;
 }

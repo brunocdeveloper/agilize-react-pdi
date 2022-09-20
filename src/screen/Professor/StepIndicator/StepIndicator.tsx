@@ -10,7 +10,7 @@ const StepIndicator = (props: StepIndicatorProps) => {
 
   const theme = useTheme();
   return (
-    <Box display="flex" width={320} justifyContent="space-between">
+    <Box display="flex" width={500} justifyContent="space-between">
       <Container onClick={() => setSteperProfessor("aluno")}>
         <Text
           ml={0.8}
@@ -50,6 +50,30 @@ const StepIndicator = (props: StepIndicatorProps) => {
         <Box
           backgroundColor={
             steperProfessor === "questoes"
+              ? theme.colors.signUp.singUpButton
+              : theme.colors.white
+          }
+          borderRadius={4}
+          width={140}
+          height={10}
+          mt={1}
+        />
+      </Container>
+      <Container onClick={() => setSteperProfessor("aplicarProvas")}>
+        <Text
+          ml={1}
+          text="Aplique as provas"
+          fontSize={15}
+          fontWeight="bold"
+          color={
+            steperProfessor === "aplicarProvas"
+              ? theme.colors.signUp.singUpButton
+              : theme.colors.white
+          }
+        />
+        <Box
+          backgroundColor={
+            steperProfessor === "aplicarProvas"
               ? theme.colors.signUp.singUpButton
               : theme.colors.white
           }
