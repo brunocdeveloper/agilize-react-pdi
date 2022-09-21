@@ -6,6 +6,7 @@ import {
   FontWeightProps,
   LineHeightProps,
   SpaceProps,
+  TextAlignProps,
   WidthProps,
 } from "styled-system";
 
@@ -16,6 +17,7 @@ export interface TextProps
     LineHeightProps,
     ColorProps,
     FontWeightProps,
+    TextAlignProps,
     FontSizeProps {
   text?: string | React.ReactElement | React.ReactNode;
   onClick?: (event?: React.ChangeEvent<any>) => void;

@@ -30,7 +30,6 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log("testes");
     const credentialsAluno = {
       ...data,
       isAluno: true,

@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
 import Box from "../../../components/Box/Box";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import { Label } from "../../../components/Input/Input.styles";
-import Text from "../../../components/Text/Text";
-import { Container } from "../../Login/Login.style";
-import { IMG, TextArea } from "./CadastroQuestoes.style";
-import { useForm, Controller } from "react-hook-form";
-import trashIcon from "../../../assets/trash-icon.svg";
-import TrashIcon from "../../../assets/TrashIcon";
-import { parse } from "@babel/core";
 import ContainerDeCadastro from "./ContainerDeCadastro";
 import ContainerListaDeQuestoes from "./ContainerListaDeQuestoes";
 

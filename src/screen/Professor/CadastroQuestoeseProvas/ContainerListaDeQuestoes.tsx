@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import TrashIcon from "../../../assets/TrashIcon";

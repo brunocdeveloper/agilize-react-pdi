@@ -8,6 +8,7 @@ import { Container } from "../../Login/Login.style";
 const AplicarProvas = () => {
   const [alunos, setAlunos] = useState<any>([]);
   const [provas, setProvas] = useState<any>([]);
+  const [provasAtribuidas, setProvasAtribuidas] = useState<any>([]);
   const theme = useTheme();
 
   useEffect(() => {
@@ -42,22 +43,66 @@ const AplicarProvas = () => {
     );
   };
 
+  const verificaSeExisteAtribuicao = () => {
+    const selectedAluno = alunos.find(
+      (aluno: any) => aluno?.selected
+    )?.username;
+    const selectedProvas = provas.find((prova: any) => prova?.selected);
+
+    const provasAtribuidas = JSON.parse(
+      localStorage.getItem("provasAtribuidas") || "[]"
+    );
+
+    const hasProvaAtribuida = provasAtribuidas.find(
+      (estudante: any) => estudante.username === selectedAluno
+    );
+
+    if (hasProvaAtribuida) {
+      const indexProvaAtribuida = provasAtribuidas.indexOf(hasProvaAtribuida);
+      provasAtribuidas[indexProvaAtribuida].provas.push(selectedProvas);
+      localStorage.setItem(
+        "provasAtribuidas",
+        JSON.stringify(provasAtribuidas)
+      );
+      return;
+    }
+
+    if (!hasProvaAtribuida) {
+      localStorage.setItem(
+        "provasAtribuidas",
+        JSON.stringify([
+          ...provasAtribuidas,
+          { username: selectedAluno, provas: [selectedProvas] },
+        ])
+      );
+      return;
+    }
+  };
+
   const createProva = () => {
-    const selectedProva = provas.filter((prova: any) => prova.selected)[0];
-    const selectedAluno = alunos.filter((aluno: any) => aluno.selected)[0];
-    const provasAtribuidas = [
-      { ...selectedProva, username: selectedAluno.username },
-    ];
-    console.log(provasAtribuidas);
-    setProvas(provas.map((prova: any) => ({ ...prova, selected: false })));
-    setAlunos(alunos.map((aluno: any) => ({ ...aluno, selected: false })));
-    localStorage.setItem("provasAtribuidas", JSON.stringify(provasAtribuidas));
+    const selectedAluno = alunos.find(
+      (aluno: any) => aluno?.selected
+    )?.username;
+    const selectedProvas = provas.find((prova: any) => prova?.selected);
+
+    const provasAtribuidas = JSON.parse(
+      localStorage.getItem("provasAtribuidas") || "[]"
+    );
+
+    if (provasAtribuidas.length === 0) {
+      localStorage.setItem(
+        "provasAtribuidas",
+        JSON.stringify([{ username: selectedAluno, provas: [selectedProvas] }])
+      );
+      return;
+    }
+    verificaSeExisteAtribuicao();
   };
 
   return (
     <Box marginX="auto" maxWidth={1100}>
       <Box mt={50} display="flex">
-        <Container height={500} width={450}>
+        <Container height={500} width={300}>
           <Box display="flex" justifyContent="flex-start" mt={20}>
             <Text
               text="Selecione um aluno"
@@ -83,7 +128,7 @@ const AplicarProvas = () => {
             ))}
           </Box>
         </Container>
-        <Container height={500} width={450}>
+        <Container height={500} width={300}>
           <Box display="flex" justifyContent="flex-start" mt={20}>
             <Text
               text="Selecione a prova a ser aplicada"
@@ -98,6 +143,32 @@ const AplicarProvas = () => {
                 <Text
                   onClick={() => handleSelectProva(prova)}
                   text={prova?.nomeProva}
+                  color={
+                    prova.selected === true
+                      ? theme.colors.signUp.singUpButton
+                      : theme.colors.signUp.singUpText
+                  }
+                  fontSize={18}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Container>
+        <Container height={500} width={300}>
+          <Box display="flex" justifyContent="flex-start" mt={20}>
+            <Text
+              text="Provas atribuidas"
+              color={theme.colors.signUp.singUpText}
+              fontSize={20}
+              fontWeight="bold"
+            />
+          </Box>
+          <Box mt={24} scrollY height={415}>
+            {provasAtribuidas?.map((prova: any) => (
+              <Box mt={3}>
+                <Text
+                  onClick={() => handleSelectProva(prova)}
+                  text={prova?.username}
                   color={
                     prova.selected === true
                       ? theme.colors.signUp.singUpButton

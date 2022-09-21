@@ -37,7 +37,12 @@ const Professor = () => {
         justifyContent="flex-end"
         padding={25}
       >
-        <Text text="Sair" color={theme.colors.white} fontWeight="bold" />
+        <Text
+          text="Sair"
+          color={theme.colors.white}
+          fontWeight="bold"
+          fontSize={18}
+        />
       </Box>
       <Box display="flex" justifyContent="center">
         <StepIndicator

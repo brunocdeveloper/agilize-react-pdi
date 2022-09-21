@@ -34,8 +34,15 @@ const Login = () => {
     } = await instanceAxios.get("/login");
     setLoadingFetch(false);
     setStatusFetching(status);
+    const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
+    const findedAluno = alunos?.find(
+      (aluno: any) => aluno.username === username
+    );
     if (isProfessor && data.user === username && data.password === password) {
       navigate("/adm");
+    }
+    if (!isProfessor && password === findedAluno.password) {
+      navigate("/aluno");
     }
   }, [username, password]);
 

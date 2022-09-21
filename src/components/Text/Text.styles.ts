@@ -6,6 +6,7 @@ import {
   fontWeight,
   lineHeight,
   space,
+  textAlign,
   width,
 } from "styled-system";
 
@@ -17,6 +18,7 @@ export const StyledText: any = styled.p`
   ${color};
   ${fontSize};
   ${fontWeight};
+  ${textAlign};
   font-family: "Inter", sans-serif;
   transition: color 0.2s ease-in-out;
 `;
