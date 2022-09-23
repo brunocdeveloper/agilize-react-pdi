@@ -1,50 +1,57 @@
-import axios from "axios";
-import React, { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import Box from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { instanceAxios } from "../../utils/Axios/axios";
-import { Container, StyledLoader } from "./Login.style";
+import { Container } from "./Login.style";
 import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
+import { useFetch } from "../../utils/useFetch/useFetch";
+import { Controller, useForm } from "react-hook-form";
 
 const Login = () => {
   const theme = useTheme();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    handleSubmit,
+    control,
+    clearErrors,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm();
   const [isProfessor, setIsProfessor] = useState(true);
-  const [loadingFetch, setLoadingFetch] = useState(false);
-  const [statusFetching, setStatusFetching] = useState(200);
+  const username = watch("username");
+  const password = watch("password");
+
+  const { isLoading, doFetch: login } = useFetch("/login", "get", {
+    onSuccess: (data) => {
+      const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
+      const findedAluno = alunos?.find(
+        (aluno: any) => aluno.username === username
+      );
+      if (
+        isProfessor &&
+        data.user === getValues("username") &&
+        data.password === getValues("password")
+      ) {
+        navigate("/adm");
+      }
+      if (!isProfessor && password === findedAluno.password) {
+        navigate("/aluno");
+      }
+    },
+  });
+
   const navigate = useNavigate();
 
   const toggleProfessorAluno = () => {
     setIsProfessor(!isProfessor);
-    setUsername("");
-    setPassword("");
+    clearErrors();
   };
 
-  const handleSubmit = useCallback(async () => {
-    setLoadingFetch(true);
-    const {
-      status,
-      data: { data },
-    } = await instanceAxios.get("/login");
-    setLoadingFetch(false);
-    setStatusFetching(status);
-    const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
-    const findedAluno = alunos?.find(
-      (aluno: any) => aluno.username === username
-    );
-    if (isProfessor && data.user === username && data.password === password) {
-      navigate("/adm");
-    }
-    if (!isProfessor && password === findedAluno.password) {
-      navigate("/aluno");
-    }
-  }, [username, password]);
+  const onSubmit = async () => {
+    await login();
+  };
 
   return (
     <Container mt={180}>
@@ -57,35 +64,54 @@ const Login = () => {
           height={40}
           borderRadius={8}
           fontWeight="bold"
+          disabled={isLoading}
           fontSize={18}
           color={theme.colors.signUp.singUpText}
           teacherBtn
         />
       </Box>
       <Box mt={20}>
-        <Input
-          onChange={({ target }) => setUsername(target.value)}
-          label={(isProfessor && "Usuário do professor") || "Usuário do aluno"}
-          width={350}
-          height={40}
-          fontSize={16}
-          value={username}
+        <Controller
+          name="username"
+          control={control}
+          rules={{ required: "Campo obrigatório" }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              onChange={onChange}
+              label={
+                (isProfessor && "Usuário do professor") || "Usuário do aluno"
+              }
+              error={errors?.username?.message}
+              width={350}
+              height={40}
+              fontSize={16}
+              value={value}
+            />
+          )}
         />
       </Box>
       <Box mt={30}>
-        <Input
-          onChange={({ target }) => setPassword(target.value)}
-          label={(isProfessor && "Senha do professor") || "Senha do aluno"}
-          width={350}
-          height={40}
-          fontSize={16}
-          type="password"
-          value={password}
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: "Campo obrigatório" }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              onChange={onChange}
+              label={(isProfessor && "Senha do professor") || "Senha do aluno"}
+              error={errors?.password?.message}
+              width={350}
+              height={40}
+              fontSize={16}
+              type="password"
+              value={value}
+            />
+          )}
         />
       </Box>
       <Box display="flex" justifyContent="center">
         <Button
-          onClick={handleSubmit}
+          onClick={handleSubmit(onSubmit)}
           mt={40}
           text="Entrar"
           width={350}
@@ -95,8 +121,9 @@ const Login = () => {
           fontSize={18}
           color={theme.colors.signUp.singUpText}
           teacherBtn
+          disabled={isLoading}
           loading={
-            loadingFetch && <CircularProgress size="18px" color="inherit" />
+            isLoading && <CircularProgress size="18px" color="inherit" />
           }
         />
       </Box>

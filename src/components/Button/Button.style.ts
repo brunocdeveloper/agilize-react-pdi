@@ -41,4 +41,13 @@ export const StyledButton: any = styled.button<ButtonProps>`
         opacity: 0.6;
       }
     `};
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: #cccccc;
+      color: #666666;
+      border-color: #999999;
+      pointer-events: none;
+    `}
 `;

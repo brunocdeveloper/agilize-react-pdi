@@ -8,6 +8,11 @@ import Text from "../../../components/Text/Text";
 import { Container } from "../../Login/Login.style";
 import { TextArea } from "./CadastroQuestoes.style";
 import { ContainerDeCadastroProps } from "./CadastroQuestoes.types";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import { useState } from "react";
+import { useFetch } from "../../../utils/useFetch/useFetch";
+import { CircularProgress } from "@mui/material";
 
 const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
   const { setQuestoesCadastradas } = props;
@@ -17,36 +22,81 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
     control,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     mode: "onSubmit",
   });
+  const [createQuestao, setCreateQuestao] = useState(false);
+  const questao = watch("questao");
+  const tema = watch("tema");
+  const questaoCorreta = watch("questaoCorreta");
+  const alternativaFalsaA = watch("alternativaFalsaA");
+  const alternativaFalsaB = watch("alternativaFalsaB");
+  const alternativaFalsaC = watch("alternativaFalsaC");
+  const alternativaFalsaD = watch("alternativaFalsaD");
+
+  const handleSuccesCreate = () => {
+    setCreateQuestao(true);
+    setTimeout(() => {
+      setCreateQuestao(false);
+    }, 2000);
+  };
+
+  const { data, isLoading, doFetch } = useFetch("/criar-questao", "post", {
+    onSuccess: () => {
+      handleSuccesCreate();
+
+      if (localStorage.getItem("questoes") !== null) {
+        const questoes = localStorage.getItem("questoes") || "[]";
+        const newQuestao = [
+          ...JSON.parse(questoes),
+          {
+            questao,
+            tema,
+            questaoCorreta,
+            alternativaFalsaA,
+            alternativaFalsaB,
+            alternativaFalsaC,
+            alternativaFalsaD,
+            id: new Date().getTime(),
+          },
+        ];
+
+        localStorage.setItem("questoes", JSON.stringify(newQuestao));
+        setQuestoesCadastradas(newQuestao);
+      }
+
+      if (localStorage.getItem("questoes") === null) {
+        const newQuestao = [
+          {
+            questao,
+            tema,
+            questaoCorreta,
+            alternativaFalsaA,
+            alternativaFalsaB,
+            alternativaFalsaC,
+            alternativaFalsaD,
+            id: new Date().getTime(),
+          },
+        ];
+        localStorage.setItem("questoes", JSON.stringify(newQuestao));
+        setQuestoesCadastradas(newQuestao);
+      }
+
+      reset({
+        questao: "",
+        tema: "",
+        questaoCorreta: "",
+        alternativaFalsaA: "",
+        alternativaFalsaB: "",
+        alternativaFalsaC: "",
+        alternativaFalsaD: "",
+      });
+    },
+  });
 
   const onSubmit = (data: any) => {
-    if (localStorage.getItem("questoes") !== null) {
-      const questoes = localStorage.getItem("questoes") || "[]";
-      const newQuestao = [
-        ...JSON.parse(questoes),
-        { ...data, id: new Date().getTime() },
-      ];
-
-      localStorage.setItem("questoes", JSON.stringify(newQuestao));
-      setQuestoesCadastradas(newQuestao);
-    }
-
-    if (localStorage.getItem("questoes") === null) {
-      const newQuestao = [{ ...data, id: new Date().getTime() }];
-      localStorage.setItem("questoes", JSON.stringify(newQuestao));
-      setQuestoesCadastradas(newQuestao);
-    }
-    reset({
-      questao: "",
-      tema: "",
-      questaoCorreta: "",
-      alternativaFalsaA: "",
-      alternativaFalsaB: "",
-      alternativaFalsaC: "",
-      alternativaFalsaD: "",
-    });
+    doFetch();
   };
 
   return (
@@ -185,6 +235,7 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
           )}
         />
       </Box>
+
       <Box display="flex" justifyContent="center">
         <Button
           onClick={handleSubmit(onSubmit)}
@@ -197,9 +248,19 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
           fontWeight="bold"
           fontSize={18}
           color={theme.colors.signUp.singUpText}
+          disabled={isLoading}
           teacherBtn
+          loading={
+            isLoading && <CircularProgress size="18px" color="inherit" />
+          }
         />
       </Box>
+
+      {createQuestao && (
+        <Stack sx={{ width: "100%" }} mt="3px">
+          <Alert severity="success">{data?.message}</Alert>
+        </Stack>
+      )}
     </Container>
   );
 };

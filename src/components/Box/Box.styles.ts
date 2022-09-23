@@ -9,6 +9,7 @@ import {
   height,
   justifyContent,
   maxWidth,
+  position,
   space,
   width,
 } from "styled-system";
@@ -25,6 +26,7 @@ export const Container: any = styled.div<BoxProps>`
   ${borderRadius};
   ${alignItems};
   ${maxWidth};
+  ${position};
   transition: background-color 0.2s ease-in-out;
 
   ${({ scrollY }) =>

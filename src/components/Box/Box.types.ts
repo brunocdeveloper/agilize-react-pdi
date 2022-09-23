@@ -10,6 +10,7 @@ import {
   AlignItemsProps,
   FlexDirectionProps,
   MaxWidthProps,
+  PositionProps,
 } from "styled-system";
 
 export interface BoxProps
@@ -22,6 +23,7 @@ export interface BoxProps
     AlignItemsProps,
     FlexDirectionProps,
     MaxWidthProps,
+    PositionProps,
     JustifyContentProps {
   children?: React.ReactElement | React.ReactNode;
   onClick?: () => void;

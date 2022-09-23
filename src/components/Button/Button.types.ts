@@ -28,4 +28,5 @@ export interface ButtonProps
   type?: string;
   children?: React.ReactNode | React.ReactElement;
   border?: string;
+  disabled?: boolean;
 }

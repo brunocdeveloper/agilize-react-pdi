@@ -12,9 +12,9 @@ app.use(cors(corsOptions));
 
 const port = process.env.PORT;
 
-app.get("/login", (req, res) => {
+app.get("/login", (_req, res) => {
   setTimeout(() => {
-    res.json({
+    res.status(200).json({
       message: "",
       error: false,
       data: {
@@ -22,10 +22,56 @@ app.get("/login", (req, res) => {
         password: "professor",
       },
     });
-  }, 2000);
+  }, 1500);
 });
 
-// app.all("*", proxy(process.env.API));
+app.post("/criar-aluno", (_req, res) => {
+  setTimeout(() => {
+    res.status(200).json({
+      message: "",
+      error: false,
+      data: {
+        message: "Aluno criado com sucesso",
+      },
+    });
+  }, 1300);
+});
+
+app.post("/criar-questao", (_req, res) => {
+  setTimeout(() => {
+    res.status(200).json({
+      message: "",
+      error: false,
+      data: {
+        message: "Questão criada com sucesso",
+      },
+    });
+  }, 1000);
+});
+
+app.post("/criar-prova", (_req, res) => {
+  setTimeout(() => {
+    res.status(200).json({
+      message: "",
+      error: false,
+      data: {
+        message: "Prova criada com sucesso",
+      },
+    });
+  }, 1100);
+});
+
+app.post("/atribuir-prova", (_req, res) => {
+  setTimeout(() => {
+    res.status(200).json({
+      message: "",
+      error: false,
+      data: {
+        message: "Prova atribuida com sucesso",
+      },
+    });
+  }, 1100);
+});
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);

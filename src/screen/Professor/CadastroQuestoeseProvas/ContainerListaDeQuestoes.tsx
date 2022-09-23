@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import TrashIcon from "../../../assets/TrashIcon";
@@ -5,20 +6,70 @@ import Box from "../../../components/Box/Box";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Text from "../../../components/Text/Text";
+import { useFetch } from "../../../utils/useFetch/useFetch";
 import { Container } from "../../Login/Login.style";
 import { ContainerListaQuestoesProps } from "./CadastroQuestoes.types";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import { useState } from "react";
 
 const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
   const { questoesCadastradas, setQuestoesCadastradas } = props;
-
   const theme = useTheme();
-
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
+    watch,
   } = useForm();
+  const [createdProva, setCreatedProva] = useState(false);
+  const nomeProva = watch("nomeProva");
+
+  const handleSuccesCreate = () => {
+    setCreatedProva(true);
+    setTimeout(() => {
+      setCreatedProva(false);
+    }, 2000);
+  };
+
+  const { data, isLoading, doFetch } = useFetch("/criar-prova", "post", {
+    onSuccess: () => {
+      handleSuccesCreate();
+      const questoes = localStorage.getItem("questoes") || "[]";
+      if (localStorage.getItem("provas") !== null) {
+        const provas = localStorage.getItem("provas") || "[]";
+
+        const newProva = [
+          {
+            nomeProva,
+            id: new Date().getTime(),
+            questoes: [...JSON.parse(questoes)],
+          },
+          ...JSON.parse(provas),
+        ];
+        localStorage.setItem("provas", JSON.stringify(newProva));
+        localStorage.removeItem("questoes");
+        setQuestoesCadastradas([]);
+      }
+
+      if (localStorage.getItem("provas") === null) {
+        const newQuestao = [
+          {
+            nomeProva,
+            id: new Date().getTime(),
+            questoes: [...JSON.parse(questoes)],
+          },
+        ];
+        localStorage.setItem("provas", JSON.stringify(newQuestao));
+        localStorage.removeItem("questoes");
+        setQuestoesCadastradas([]);
+      }
+      reset({
+        nomeProva: "",
+      });
+    },
+  });
 
   const deleteQuestao = (id: string) => {
     const questoes = localStorage.getItem("questoes") || "[]";
@@ -30,39 +81,8 @@ const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
     setQuestoesCadastradas(parseQuestoes.filter((item: any) => item.id !== id));
   };
 
-  const createProva = (data: any) => {
-    const questoes = localStorage.getItem("questoes") || "[]";
-    if (localStorage.getItem("provas") !== null) {
-      const provas = localStorage.getItem("provas") || "[]";
-
-      const newProva = [
-        {
-          ...data,
-          id: new Date().getTime(),
-          questoes: [...JSON.parse(questoes)],
-        },
-        ...JSON.parse(provas),
-      ];
-      localStorage.setItem("provas", JSON.stringify(newProva));
-      localStorage.removeItem("questoes");
-      setQuestoesCadastradas([]);
-    }
-
-    if (localStorage.getItem("provas") === null) {
-      const newQuestao = [
-        {
-          ...data,
-          id: new Date().getTime(),
-          questoes: [...JSON.parse(questoes)],
-        },
-      ];
-      localStorage.setItem("provas", JSON.stringify(newQuestao));
-      localStorage.removeItem("questoes");
-      setQuestoesCadastradas([]);
-    }
-    reset({
-      nomeProva: "",
-    });
+  const createProva = () => {
+    doFetch();
   };
 
   return (
@@ -139,9 +159,18 @@ const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
             fontSize={18}
             color={theme.colors.signUp.singUpText}
             teacherBtn
+            disabled={isLoading || questoesCadastradas?.length === 0}
+            loading={
+              isLoading && <CircularProgress size="18px" color="inherit" />
+            }
           />
         </Box>
       </Box>
+      {createdProva && (
+        <Stack sx={{ width: "100%" }} mt="3px">
+          <Alert severity="success">{data?.message}</Alert>
+        </Stack>
+      )}
     </Container>
   );
 };
