@@ -4,14 +4,17 @@ import Box from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Text from "../../components/Text/Text";
+import { useUserContext } from "../../context/UserContext";
 import { Container } from "../Login/Login.style";
 import AplicarProvas from "./AplicarProvas/AplicarProvas";
 import CadastroAluno from "./CadastroAlunos/CadastroAluno";
 import CadastroQuestoes from "./CadastroQuestoeseProvas/CadastroQuestoes";
+import { StyledText } from "./Professor.style";
 import StepIndicator from "./StepIndicator/StepIndicator";
 
 const Professor = () => {
   const theme = useTheme();
+  const { setIsLoged } = useUserContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [stepProfessor, setStepProfessor] = useState("aluno");
@@ -37,12 +40,7 @@ const Professor = () => {
         justifyContent="flex-end"
         padding={25}
       >
-        <Text
-          text="Sair"
-          color={theme.colors.white}
-          fontWeight="bold"
-          fontSize={18}
-        />
+        <StyledText onClick={() => setIsLoged(false)} text="Sair" />
       </Box>
       <Box display="flex" justifyContent="center">
         <StepIndicator

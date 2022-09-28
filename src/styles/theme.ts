@@ -1,5 +1,6 @@
 export const theme = {
   colors: {
+    bookIcon: "#7B05A5",
     body: "#7E40BF",
     white: "#FDFDFF",
     correctlyQuestion: "#008000",
@@ -18,6 +19,7 @@ export const theme = {
 
 export const antiTheme = {
   colors: {
+    bookIcon: "#7B05A5",
     body: "#4C2673",
     white: "#FDFDFF",
     correctlyQuestion: "#008000",

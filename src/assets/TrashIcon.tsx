@@ -1,6 +1,12 @@
-import React from "react";
+import { SVGProps } from "react";
 
-const TrashIcon = (props) => {
+interface TrashIconProps {
+  width: string | number;
+  height: string | number;
+  fill: string | undefined;
+}
+
+const TrashIcon = (props: TrashIconProps) => {
   const { width, height, fill } = props;
   return (
     <svg

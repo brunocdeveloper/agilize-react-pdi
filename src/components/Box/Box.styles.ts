@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import {
   alignItems,
+  alignSelf,
   backgroundColor,
   borderRadius,
   color,
@@ -25,6 +26,7 @@ export const Container: any = styled.div<BoxProps>`
   ${width};
   ${borderRadius};
   ${alignItems};
+  ${alignSelf};
   ${maxWidth};
   ${position};
   transition: background-color 0.2s ease-in-out;

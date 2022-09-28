@@ -11,6 +11,7 @@ import {
   FlexDirectionProps,
   MaxWidthProps,
   PositionProps,
+  AlignSelfProps,
 } from "styled-system";
 
 export interface BoxProps
@@ -24,6 +25,7 @@ export interface BoxProps
     FlexDirectionProps,
     MaxWidthProps,
     PositionProps,
+    AlignSelfProps,
     JustifyContentProps {
   children?: React.ReactElement | React.ReactNode;
   onClick?: () => void;

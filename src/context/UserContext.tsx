@@ -4,13 +4,23 @@ interface UserProviderProps {
   children: React.ReactElement | React.ReactNode;
 }
 
-export const UserContext = createContext({});
+interface UserContexType {
+  isLoged: boolean;
+  setIsLoged: (t: boolean) => void;
+  user: string;
+  setUser: (t: string) => void;
+}
+
+export const UserContext = createContext({} as UserContexType);
 export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState("bruno");
+  const [isLoged, setIsLoged] = useState(false);
+  const [user, setUser] = useState("");
 
   const value = {
+    isLoged,
+    setIsLoged,
     user,
     setUser,
   };

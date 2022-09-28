@@ -8,6 +8,7 @@ import { useFetch } from "../../../utils/useFetch/useFetch";
 import { Container } from "../../Login/Login.style";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import { StyledText } from "./AplicarProvas.style";
 
 const AplicarProvas = () => {
   const [alunos, setAlunos] = useState<any>([]);
@@ -142,7 +143,7 @@ const AplicarProvas = () => {
           <Box mt={24} scrollY height={400}>
             {alunos?.map((aluno: any) => (
               <Box mt={3}>
-                <Text
+                <StyledText
                   onClick={() => handleSelectUser(aluno)}
                   text={aluno?.username}
                   color={
@@ -168,7 +169,7 @@ const AplicarProvas = () => {
           <Box mt={24} scrollY height={400}>
             {provas?.map((prova: any) => (
               <Box mt={3}>
-                <Text
+                <StyledText
                   onClick={() => handleSelectProva(prova)}
                   text={prova?.nomeProva}
                   color={

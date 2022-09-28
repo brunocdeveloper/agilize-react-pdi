@@ -8,9 +8,11 @@ import { Container } from "./Login.style";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useFetch } from "../../utils/useFetch/useFetch";
 import { Controller, useForm } from "react-hook-form";
+import { useUserContext } from "../../context/UserContext";
 
 const Login = () => {
   const theme = useTheme();
+  const { setIsLoged, setUser } = useUserContext();
   const {
     handleSubmit,
     control,
@@ -34,9 +36,12 @@ const Login = () => {
         data.user === getValues("username") &&
         data.password === getValues("password")
       ) {
+        setIsLoged(true);
         navigate("/adm");
       }
       if (!isProfessor && password === findedAluno.password) {
+        setIsLoged(true);
+        setUser(findedAluno.username);
         navigate("/aluno");
       }
     },

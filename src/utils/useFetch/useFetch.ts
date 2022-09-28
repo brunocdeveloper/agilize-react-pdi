@@ -13,7 +13,7 @@ export const useFetch = (
   method: Methods,
   props: UseFetchProps = {}
 ) => {
-  const [data, setData] = useState({} as any);
+  const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
   const { onSuccess, onError } = props;
 
@@ -37,6 +37,7 @@ export const useFetch = (
   return {
     doFetch,
     data,
+    setData,
     isLoading,
   };
 };
