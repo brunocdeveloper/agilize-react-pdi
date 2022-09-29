@@ -22,12 +22,21 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
     mode: "onSubmit",
   });
   const [createUser, setCreateUser] = useState(false);
+  const [hasAlunoError, setHasAlunoError] = useState(false);
+
   const theme = useTheme();
 
   const handleSuccesCreate = () => {
     setCreateUser(true);
     setTimeout(() => {
       setCreateUser(false);
+    }, 2000);
+  };
+
+  const handleHasAlunoError = () => {
+    setHasAlunoError(true);
+    setTimeout(() => {
+      setHasAlunoError(false);
     }, 2000);
   };
 
@@ -46,11 +55,25 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
   });
 
   const onSubmit = (data: any) => {
+    const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
+    const hasAluno = alunos.find(
+      (aluno: any) => aluno.username === data.username
+    );
+    if (hasAluno) {
+      handleHasAlunoError();
+      reset({
+        username: "",
+        password: "",
+      });
+      return;
+    }
+
     createAluno();
     const credentialsAluno = {
       ...data,
       isAluno: true,
     };
+
     if (localStorage.getItem("alunos") !== null) {
       const alunos = localStorage.getItem("alunos") || "";
       localStorage.setItem(
@@ -133,6 +156,12 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
       {createUser && (
         <Stack sx={{ width: "100%" }} mt={3}>
           <Alert severity="success">{data.message}</Alert>
+        </Stack>
+      )}
+
+      {hasAlunoError && (
+        <Stack sx={{ width: "100%" }} mt={3}>
+          <Alert severity="error">Usuário já existe</Alert>
         </Stack>
       )}
     </Container>

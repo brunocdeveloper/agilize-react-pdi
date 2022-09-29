@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import BookIcon from "../../assets/BookIcon";
 import Box from "../../components/Box/Box";
@@ -8,7 +9,7 @@ import Text from "../../components/Text/Text";
 import { useUserContext } from "../../context/UserContext";
 import { useFetch } from "../../utils/useFetch/useFetch";
 import { Container } from "../Login/Login.style";
-import { StyledText } from "./Aluno.style";
+import { AlternativeInput, StyledText } from "./Aluno.style";
 
 interface ProvaType {
   id: number;
@@ -22,7 +23,7 @@ const Aluno = () => {
   const [selectedProva, setSelectedProva] = useState<ProvaType>();
   const theme = useTheme();
   const { setIsLoged, user } = useUserContext();
-
+  const { watch, setValue, getValues } = useForm();
   const {
     data,
     isLoading,
@@ -52,17 +53,20 @@ const Aluno = () => {
     return array.sort(() => Math.random() - 0.5);
   };
 
-  const serializeData = data?.questoes.map((questoes: any) => ({
-    questao: questoes.questao,
-    tema: questoes.tema,
-    alternativas: shuffleQuestoes([
-      { alternativa: questoes.alternativaFalsaA, isCorreta: false },
-      { alternativa: questoes.alternativaFalsaB, isCorreta: false },
-      { alternativa: questoes.alternativaFalsaC, isCorreta: false },
-      { alternativa: questoes.alternativaFalsaD, isCorreta: false },
-      { alternativa: questoes.questaoCorreta, isCorreta: true },
-    ]),
-  }));
+  const serializeData = useMemo(() => {
+    return data?.questoes.map((questoes: any) => ({
+      questao: questoes.questao,
+      tema: questoes.tema,
+      chaveQuestao: questoes.chaveQuestao,
+      alternativas: shuffleQuestoes([
+        { alternativa: questoes.alternativaFalsaA, isCorreta: false },
+        { alternativa: questoes.alternativaFalsaB, isCorreta: false },
+        { alternativa: questoes.alternativaFalsaC, isCorreta: false },
+        { alternativa: questoes.alternativaFalsaD, isCorreta: false },
+        { alternativa: questoes.questaoCorreta, isCorreta: true },
+      ]),
+    }));
+  }, [data]);
 
   return (
     <Box paddingBottom={60}>
@@ -126,13 +130,14 @@ const Aluno = () => {
             width={200}
             height={60}
             borderRadius={8}
+            fontWeight="bold"
             fontSize={18}
             color={theme.colors.signUp.singUpText}
             disabled={isLoading}
+            teacherBtn
             loading={
               isLoading && <CircularProgress size="18px" color="inherit" />
             }
-            opacityOnClick
           />
         </Box>
       </Container>
@@ -148,9 +153,21 @@ const Aluno = () => {
             <Box mt={4}>
               <Text text={questao.questao} />
             </Box>
-            <Box mt="25px">
-              {questao.alternativas.map((alternativa: any) => (
-                <Text mt={3} text={alternativa.alternativa} />
+            <Box mt="15px" display="flex" flexDirection="column">
+              {questao.alternativas.map((alternativa: any, index: any) => (
+                <AlternativeInput
+                  value={alternativa.alternativa}
+                  onClick={() => {
+                    setValue(questao.chaveQuestao, alternativa);
+                    console.log(watch(questao.chaveQuestao));
+                  }}
+                  mt={2}
+                  selected={
+                    watch(questao.chaveQuestao)?.alternativa ===
+                    alternativa.alternativa
+                  }
+                  readOnly
+                />
               ))}
             </Box>
           </Container>

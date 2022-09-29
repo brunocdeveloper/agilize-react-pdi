@@ -12,6 +12,7 @@ import {
   MaxWidthProps,
   PositionProps,
   AlignSelfProps,
+  MinWidthProps,
 } from "styled-system";
 
 export interface BoxProps
@@ -24,6 +25,7 @@ export interface BoxProps
     AlignItemsProps,
     FlexDirectionProps,
     MaxWidthProps,
+    MinWidthProps,
     PositionProps,
     AlignSelfProps,
     JustifyContentProps {

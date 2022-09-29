@@ -51,6 +51,7 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
         const newQuestao = [
           ...JSON.parse(questoes),
           {
+            chaveQuestao: `questao${JSON.parse(questoes).length + 1}`,
             questao,
             tema,
             questaoCorreta,
@@ -69,6 +70,7 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
       if (localStorage.getItem("questoes") === null) {
         const newQuestao = [
           {
+            chaveQuestao: `questao${1}`,
             questao,
             tema,
             questaoCorreta,

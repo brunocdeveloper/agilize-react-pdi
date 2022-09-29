@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useFetch } from "../../utils/useFetch/useFetch";
 import { Controller, useForm } from "react-hook-form";
 import { useUserContext } from "../../context/UserContext";
+import { Alert, Stack } from "@mui/material";
 
 const Login = () => {
   const theme = useTheme();
@@ -24,6 +25,14 @@ const Login = () => {
   const [isProfessor, setIsProfessor] = useState(true);
   const username = watch("username");
   const password = watch("password");
+  const [errorLogin, setErrorLogin] = useState(false);
+
+  const handleErrorLogin = () => {
+    setErrorLogin(true);
+    setTimeout(() => {
+      setErrorLogin(false);
+    }, 2000);
+  };
 
   const { isLoading, doFetch: login } = useFetch("/login", "get", {
     onSuccess: (data) => {
@@ -38,12 +47,16 @@ const Login = () => {
       ) {
         setIsLoged(true);
         navigate("/adm");
+        return;
       }
       if (!isProfessor && password === findedAluno.password) {
         setIsLoged(true);
         setUser(findedAluno.username);
         navigate("/aluno");
+        return;
       }
+
+      return handleErrorLogin();
     },
   });
 
@@ -132,6 +145,14 @@ const Login = () => {
           }
         />
       </Box>
+
+      {errorLogin && (
+        <Box width={600} ml={50} mt={10}>
+          <Stack sx={{ width: "40%" }}>
+            <Alert severity="error">Credenciais inválida</Alert>
+          </Stack>
+        </Box>
+      )}
     </Container>
   );
 };

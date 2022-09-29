@@ -8,7 +8,7 @@ import { useFetch } from "../../../utils/useFetch/useFetch";
 import { Container } from "../../Login/Login.style";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { StyledText } from "./AplicarProvas.style";
+import { StyledContainer, StyledText } from "./AplicarProvas.style";
 
 const AplicarProvas = () => {
   const [alunos, setAlunos] = useState<any>([]);
@@ -130,7 +130,7 @@ const AplicarProvas = () => {
 
   return (
     <Box marginX="auto" maxWidth={1100}>
-      <Box mt={50} display="flex">
+      <StyledContainer mt={50} display="flex">
         <Container height={500} width={300}>
           <Box display="flex" justifyContent="flex-start" mt={20}>
             <Text
@@ -214,7 +214,7 @@ const AplicarProvas = () => {
             ))}
           </Box>
         </Container>
-      </Box>
+      </StyledContainer>
       {isProvaAtribuida && (
         <Box
           display="flex"

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import Box from "../../../components/Box/Box";
 import { TextAreaProps } from "./CadastroQuestoes.types";
 
 export const TextArea: any = styled.textarea<TextAreaProps>`
@@ -37,4 +38,16 @@ export const TextArea: any = styled.textarea<TextAreaProps>`
 export const IMG = styled.img`
   fill: green;
   color: green;
+`;
+
+export const Container = styled(Box)`
+  display: flex;
+  margin: 50px auto 40px auto;
+  max-width: 1300px;
+
+  @media (max-width: 1197px) {
+    height: 1500px;
+    justify-content: space-between;
+    flex-direction: column;
+  }
 `;
