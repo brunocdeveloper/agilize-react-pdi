@@ -33,15 +33,6 @@ const Professor = () => {
 
   return (
     <Box>
-      <Box
-        height={20}
-        display="flex"
-        alignItems="center"
-        justifyContent="flex-end"
-        padding={25}
-      >
-        <StyledText onClick={() => setIsLoged(false)} text="Sair" />
-      </Box>
       <Box display="flex" justifyContent="center">
         <StepIndicator
           steperProfessor={stepProfessor}

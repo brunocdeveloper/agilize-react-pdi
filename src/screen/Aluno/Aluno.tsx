@@ -1,10 +1,11 @@
 import { CircularProgress } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import BookIcon from "../../assets/BookIcon";
 import Box from "../../components/Box/Box";
 import Button from "../../components/Button/Button";
+import useCountDown from "../../components/CountDown/CountDown";
 import Text from "../../components/Text/Text";
 import { useUserContext } from "../../context/UserContext";
 import { useFetch } from "../../utils/useFetch/useFetch";
@@ -22,17 +23,22 @@ const Aluno = () => {
   const [provas, setProvas] = useState([]);
   const [selectedProva, setSelectedProva] = useState<ProvaType>();
   const theme = useTheme();
-  const { setIsLoged, user } = useUserContext();
-  const { watch, setValue, getValues } = useForm();
+  const { user, isStartedProva, setIsStartedProva } = useUserContext();
+  const { watch, setValue } = useForm();
+  const { setCount, Count } = useCountDown(60);
+
   const {
     data,
     isLoading,
     doFetch,
     setData: updateData,
   } = useFetch(`/prova/${selectedProva?.nomeProva}/quetoes`, "get");
+
   const iniciarProva = async () => {
     await doFetch();
     updateData(selectedProva);
+    setCount();
+    setIsStartedProva(false);
   };
 
   useEffect(() => {
@@ -70,77 +76,67 @@ const Aluno = () => {
 
   return (
     <Box paddingBottom={60}>
-      <Box
-        height={20}
-        display="flex"
-        alignItems="center"
-        justifyContent="flex-end"
-        padding={25}
-        mb={20}
-      >
-        <StyledText
-          onClick={() => setIsLoged(false)}
-          text="Sair"
-          fontSize={20}
-          fontWeight="bold"
-          color={theme.colors.white}
-        />
+      <Box position="fixed" top={25} left={25}>
+        <Count />
       </Box>
-      <Container
-        width={750}
-        padding={4}
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-between"
-      >
-        <Box>
+
+      {isStartedProva && (
+        <Container
+          width={750}
+          padding={4}
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+        >
           <Box>
+            <Box>
+              <Text
+                text={`Bem vindo ${user}`}
+                color={theme.colors.signUp.singUpText}
+                fontSize={20}
+                fontWeight="bold"
+              />
+            </Box>
+
             <Text
-              text={`Bem vindo ${user}`}
+              mt={20}
+              text={`Escolha uma prova e clique em começar:`}
               color={theme.colors.signUp.singUpText}
-              fontSize={20}
+              fontSize={18}
+            />
+
+            {provas &&
+              provas.map((prova: ProvaType) => (
+                <Box width="100%" display="flex">
+                  <StyledText
+                    onClick={() => selectProva(prova)}
+                    selected={selectedProva?.nomeProva === prova.nomeProva}
+                    mt={20}
+                    text={prova.nomeProva}
+                    color={theme.colors.signUp.singUpText}
+                  />
+                </Box>
+              ))}
+          </Box>
+          <Box alignSelf="flex-end">
+            <Button
+              onClick={iniciarProva}
+              text="Iniciar"
+              width={200}
+              height={60}
+              borderRadius={8}
               fontWeight="bold"
+              fontSize={18}
+              color={theme.colors.signUp.singUpText}
+              disabled={isLoading}
+              teacherBtn
+              loading={
+                isLoading && <CircularProgress size="18px" color="inherit" />
+              }
             />
           </Box>
-
-          <Text
-            mt={20}
-            text={`Escolha uma prova e clique em começar:`}
-            color={theme.colors.signUp.singUpText}
-            fontSize={18}
-          />
-
-          {provas &&
-            provas.map((prova: ProvaType) => (
-              <Box width="100%" display="flex">
-                <StyledText
-                  onClick={() => selectProva(prova)}
-                  selected={selectedProva?.nomeProva === prova.nomeProva}
-                  mt={20}
-                  text={prova.nomeProva}
-                  color={theme.colors.signUp.singUpText}
-                />
-              </Box>
-            ))}
-        </Box>
-        <Box alignSelf="flex-end">
-          <Button
-            onClick={iniciarProva}
-            text="Iniciar"
-            width={200}
-            height={60}
-            borderRadius={8}
-            fontWeight="bold"
-            fontSize={18}
-            color={theme.colors.signUp.singUpText}
-            disabled={isLoading}
-            teacherBtn
-            loading={
-              isLoading && <CircularProgress size="18px" color="inherit" />
-            }
-          />
-        </Box>
-      </Container>
+        </Container>
+      )}
 
       {serializeData &&
         serializeData.map((questao: any) => (
@@ -159,7 +155,6 @@ const Aluno = () => {
                   value={alternativa.alternativa}
                   onClick={() => {
                     setValue(questao.chaveQuestao, alternativa);
-                    console.log(watch(questao.chaveQuestao));
                   }}
                   mt={2}
                   selected={

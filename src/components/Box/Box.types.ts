@@ -32,4 +32,5 @@ export interface BoxProps
   children?: React.ReactElement | React.ReactNode;
   onClick?: () => void;
   scrollY?: boolean;
+  opacityOnHover?: boolean;
 }
