@@ -88,7 +88,7 @@ app.get("/concluir-prova", (req, res) => {
     res.status(200).json({
       message: "",
       error: false,
-      data: [],
+      data: [{ message: "Prova concluída" }],
     });
   }, 3000);
 });

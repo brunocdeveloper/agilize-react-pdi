@@ -51,10 +51,10 @@ const Aluno = () => {
   const iniciarProva = async () => {
     await doFetch();
     updateData(selectedProva);
-    // setCount();
+    setCount();
     setIsStartedProva(false);
   };
-  console.log({ resultProva });
+
   useEffect(() => {
     const provasJaAtribuidas = JSON.parse(
       localStorage.getItem("provasAtribuidas") || "[]"
@@ -98,13 +98,30 @@ const Aluno = () => {
       return;
     }
     fetchConcluirProva();
-    console.log(verificaQuestoesPreenchidas());
   };
+
+  const apuraQuestoes = () => {
+    const acertos = serializeData?.filter(
+      (prova: any) => getValues(prova.chaveQuestao)?.isCorreta === true
+    );
+
+    const PONTUACAO_MAXIMA = 10;
+    const quantidadeAcertos = acertos?.length;
+    const quantidadeQuestoes = data?.questoes.length;
+    const pontuacaoPorQuestao = PONTUACAO_MAXIMA / quantidadeQuestoes;
+    const pontuacaoTotal = quantidadeAcertos * pontuacaoPorQuestao;
+
+    return {
+      acertos: quantidadeAcertos,
+      pontuacaoTotal,
+    };
+  };
+  apuraQuestoes();
   return (
     <Box paddingBottom={60}>
-      {/* <Box position="fixed" top={25} left={25}>
+      <Box position="fixed" top={25} left={25}>
         <Count />
-      </Box> */}
+      </Box>
 
       {isStartedProva && (
         <Container
@@ -208,7 +225,8 @@ const Aluno = () => {
             </Box>
           </Container>
         ))}
-      {serializeData && (
+
+      {serializeData && !resultProva && (
         <Box
           mt={30}
           display="flex"
@@ -235,6 +253,32 @@ const Aluno = () => {
             }
           />
         </Box>
+      )}
+
+      {resultProva && (
+        <Container width={750} mt={4} paddingX={4} paddingY={4} height="100%">
+          <Box display="flex" justifyContent="flex-start">
+            <Text
+              text="Resultado da prova"
+              color={theme.colors.signUp.singUpText}
+              fontSize={20}
+              fontWeight="bold"
+            />
+          </Box>
+
+          <Box display="flex" justifyContent="flex-start">
+            <Text
+              mt={18}
+              text={`Você acertou ${
+                apuraQuestoes().acertos
+              } questões e fez um total de ${
+                apuraQuestoes().pontuacaoTotal
+              } pontos`}
+              color={theme.colors.signUp.singUpText}
+              fontSize={20}
+            />
+          </Box>
+        </Container>
       )}
 
       {erroConcluirProva && (
