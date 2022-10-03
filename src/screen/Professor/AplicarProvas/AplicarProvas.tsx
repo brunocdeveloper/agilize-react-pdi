@@ -231,6 +231,7 @@ const AplicarProvas = () => {
       <Box display="flex" justifyContent="center" mt={50}>
         <Button
           onClick={createProva}
+          backgroundColor={theme.colors.signUp.container}
           text="Atribuir prova"
           width={350}
           height={60}

@@ -19,14 +19,35 @@ export const StyledText = styled(Text)<{ selected?: boolean }>`
 export const AlternativeInput = styled.input<AlternativeInputType>`
   ${margin}
 
-  background-color: ${({ theme }) => theme.colors.signUp.inputColor};
+  background-color: ${({ backgroundColor, theme }) =>
+    backgroundColor || theme.colors.signUp.inputColor};
   border: none;
   padding: 10px;
+  border-radius: 8px;
   cursor: pointer;
+  height: 40px;
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.signUp.inputText};
 
-  ${({ selected }) =>
+  ${({ selected, theme }) =>
     selected &&
     css`
-      background-color: green;
+      border-style: solid;
+      border-width: 2px;
+      border-color: ${theme.colors.correctlyQuestion};
+    `}
+
+  ${({ isCorrect, theme }) =>
+    isCorrect &&
+    css`
+      background-color: ${theme.colors.correctlyQuestion};
+      pointer-events: none;
+    `}
+
+    ${({ isIncorrect, theme }) =>
+    isIncorrect &&
+    css`
+      background-color: ${theme.colors.incorrectlyQuestion};
+      pointer-events: none;
     `}
 `;

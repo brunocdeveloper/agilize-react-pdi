@@ -47,7 +47,8 @@ export const StyledButton: any = styled.button<ButtonProps>`
     css`
       background-color: #cccccc;
       color: #666666;
-      border-color: #999999;
+      border-color: none;
+      border-width: 0;
       pointer-events: none;
     `}
 `;

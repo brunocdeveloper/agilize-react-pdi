@@ -14,23 +14,23 @@ export const TextArea: any = styled.textarea<TextAreaProps>`
   font-size: 16px;
   resize: none;
 
-  ${({ error }) =>
+  ${({ error, theme }) =>
     error &&
     css`
       ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: red;
+        color: ${theme.colors.incorrectlyQuestion};
         opacity: 1; /* Firefox */
       }
 
       :-ms-input-placeholder {
         /* Internet Explorer 10-11 */
-        color: red;
+        color: ${theme.colors.incorrectlyQuestion};
       }
 
       ::-ms-input-placeholder {
         /* Microsoft Edge */
-        color: red;
+        color: ${theme.colors.incorrectlyQuestion};
       }
     `}
 `;

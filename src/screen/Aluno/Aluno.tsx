@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Alert, CircularProgress, Stack } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
@@ -24,8 +24,16 @@ const Aluno = () => {
   const [selectedProva, setSelectedProva] = useState<ProvaType>();
   const theme = useTheme();
   const { user, isStartedProva, setIsStartedProva } = useUserContext();
-  const { watch, setValue } = useForm();
+  const { watch, setValue, trigger, getValues } = useForm();
   const { setCount, Count } = useCountDown(60);
+  const [erroConcluirProva, setErrorConcluirProva] = useState(false);
+
+  const handleErrorconcluir = () => {
+    setErrorConcluirProva(true);
+    setTimeout(() => {
+      setErrorConcluirProva(false);
+    }, 2000);
+  };
 
   const {
     data,
@@ -34,13 +42,19 @@ const Aluno = () => {
     setData: updateData,
   } = useFetch(`/prova/${selectedProva?.nomeProva}/quetoes`, "get");
 
+  const {
+    data: resultProva,
+    isLoading: isLoadingConcluirProva,
+    doFetch: fetchConcluirProva,
+  } = useFetch("/concluir-prova", "get");
+
   const iniciarProva = async () => {
     await doFetch();
     updateData(selectedProva);
-    setCount();
+    // setCount();
     setIsStartedProva(false);
   };
-
+  console.log({ resultProva });
   useEffect(() => {
     const provasJaAtribuidas = JSON.parse(
       localStorage.getItem("provasAtribuidas") || "[]"
@@ -74,11 +88,23 @@ const Aluno = () => {
     }));
   }, [data]);
 
+  const verificaQuestoesPreenchidas = () => {
+    return serializeData.some((prova: any) => !getValues(prova.chaveQuestao));
+  };
+
+  const concluirProva = async () => {
+    if (verificaQuestoesPreenchidas()) {
+      handleErrorconcluir();
+      return;
+    }
+    fetchConcluirProva();
+    console.log(verificaQuestoesPreenchidas());
+  };
   return (
     <Box paddingBottom={60}>
-      <Box position="fixed" top={25} left={25}>
+      {/* <Box position="fixed" top={25} left={25}>
         <Count />
-      </Box>
+      </Box> */}
 
       {isStartedProva && (
         <Container
@@ -140,14 +166,27 @@ const Aluno = () => {
 
       {serializeData &&
         serializeData.map((questao: any) => (
-          <Container width={750} mt={4} paddingX={4} paddingY={3} height="100%">
+          <Container width={750} mt={4} paddingX={4} paddingY={4} height="100%">
             <Box display="flex" alignItems="center">
               <BookIcon width={30} height={30} fill={theme.colors.bookIcon} />
-              <Text ml={2} text={`Pergunta relacionada ao tema`} />
-              <Text fontWeight="bold" ml={2} text={` #${questao.tema}`} />
+              <Text
+                ml={2}
+                text={`Pergunta relacionada ao tema`}
+                color={theme.colors.signUp.inputText}
+              />
+              <Text
+                fontWeight="bold"
+                ml={2}
+                text={` #${questao.tema}`}
+                color={theme.colors.signUp.inputText}
+              />
             </Box>
             <Box mt={4}>
-              <Text text={questao.questao} />
+              <Text
+                fontSize={20}
+                text={questao.questao}
+                color={theme.colors.signUp.inputText}
+              />
             </Box>
             <Box mt="15px" display="flex" flexDirection="column">
               {questao.alternativas.map((alternativa: any, index: any) => (
@@ -157,6 +196,8 @@ const Aluno = () => {
                     setValue(questao.chaveQuestao, alternativa);
                   }}
                   mt={2}
+                  isCorrect={resultProva && alternativa.isCorreta === true}
+                  isIncorrect={resultProva && alternativa.isCorreta === false}
                   selected={
                     watch(questao.chaveQuestao)?.alternativa ===
                     alternativa.alternativa
@@ -167,6 +208,48 @@ const Aluno = () => {
             </Box>
           </Container>
         ))}
+      {serializeData && (
+        <Box
+          mt={30}
+          display="flex"
+          justifyContent="flex-end"
+          width={750}
+          marginX="auto"
+        >
+          <Button
+            onClick={concluirProva}
+            backgroundColor={theme.colors.signUp.container}
+            text="Concluir"
+            width={200}
+            height={60}
+            borderRadius={8}
+            fontWeight="bold"
+            fontSize={18}
+            color={theme.colors.signUp.singUpText}
+            disabled={isLoadingConcluirProva}
+            teacherBtn
+            loading={
+              isLoadingConcluirProva && (
+                <CircularProgress size="18px" color="inherit" />
+              )
+            }
+          />
+        </Box>
+      )}
+
+      {erroConcluirProva && (
+        <Box
+          mt={-100}
+          display="flex"
+          justifyContent="center"
+          width={750}
+          marginX="auto"
+        >
+          <Stack sx={{ width: "60%" }}>
+            <Alert severity="error">Responda todas as questões</Alert>
+          </Stack>
+        </Box>
+      )}
     </Box>
   );
 };

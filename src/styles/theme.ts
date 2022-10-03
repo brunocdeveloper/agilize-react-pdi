@@ -3,8 +3,8 @@ export const theme = {
     bookIcon: "#7B05A5",
     body: "#7E40BF",
     white: "#FDFDFF",
-    correctlyQuestion: "#008000",
-    incorrectlyQuestion: "#e32636",
+    correctlyQuestion: "#00B781",
+    incorrectlyQuestion: "#E0615B",
     signUp: {
       container: "#FDFDFF",
       labelInput: "#89898F",
@@ -19,11 +19,11 @@ export const theme = {
 
 export const antiTheme = {
   colors: {
-    bookIcon: "#7B05A5",
+    bookIcon: "#00875F",
     body: "#4C2673",
     white: "#FDFDFF",
-    correctlyQuestion: "#008000",
-    incorrectlyQuestion: "#e32636",
+    correctlyQuestion: "#00875F",
+    incorrectlyQuestion: "#B9504B",
     signUp: {
       container: "#202024",
       labelInput: "#F7F7F8",

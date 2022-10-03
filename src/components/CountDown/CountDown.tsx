@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useTheme } from "styled-components";
 import Box from "../Box/Box";
 import Text from "../Text/Text";
 
 const useCountDown = (minutes: number) => {
   const [countSeconds, setCoundSeconds] = useState(minutes * 60);
   const [isCounting, setIsCounting] = useState(false);
+  const theme = useTheme();
 
   const totalMinutes = Math.floor(countSeconds / 60);
   const seconds = countSeconds % 60;
@@ -24,9 +26,18 @@ const useCountDown = (minutes: number) => {
   }, [countSeconds, isCounting]);
   const CountDown = () => {
     return (
-      <Box width={100}>
+      <Box
+        width={100}
+        backgroundColor={theme.colors.signUp.container}
+        display="flex"
+        justifyContent="center"
+        height="40px"
+        alignItems="center"
+        borderRadius={25}
+      >
         <Text
-          color="grey500"
+          fontWeight="bold"
+          color={theme.colors.signUp.singUpText}
           fontSize={16}
           text={`${totalMinutes} : ${secondsFormated}`}
         />

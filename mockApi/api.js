@@ -83,6 +83,16 @@ app.get("/prova/:id/quetoes", (req, res) => {
   }, 3000);
 });
 
+app.get("/concluir-prova", (req, res) => {
+  setTimeout(() => {
+    res.status(200).json({
+      message: "",
+      error: false,
+      data: [],
+    });
+  }, 3000);
+});
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
