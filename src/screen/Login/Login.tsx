@@ -10,6 +10,7 @@ import { useFetch } from "../../utils/useFetch/useFetch";
 import { Controller, useForm } from "react-hook-form";
 import { useUserContext } from "../../context/UserContext";
 import { Alert, Stack } from "@mui/material";
+import { AlunoTypes } from "./Login.types";
 
 const Login = () => {
   const theme = useTheme();
@@ -38,8 +39,9 @@ const Login = () => {
     onSuccess: (data) => {
       const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
       const findedAluno = alunos?.find(
-        (aluno: any) => aluno.username === username
+        (aluno: AlunoTypes) => aluno.username === username
       );
+
       if (
         isProfessor &&
         data.user === getValues("username") &&
