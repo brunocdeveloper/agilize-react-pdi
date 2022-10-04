@@ -5,3 +5,8 @@ export interface CadastroAlunosProps {
   username: string | number;
   saveAutentication: (event: any) => void;
 }
+
+export interface CredenciaisTypes {
+  username: string;
+  password: string;
+}

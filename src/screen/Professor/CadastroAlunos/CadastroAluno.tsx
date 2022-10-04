@@ -5,7 +5,7 @@ import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Text from "../../../components/Text/Text";
 import { Container } from "../../Login/Login.style";
-import { CadastroAlunosProps } from "./Cadastro.types";
+import { CadastroAlunosProps, CredenciaisTypes } from "./Cadastro.types";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Controller, useForm } from "react-hook-form";
@@ -20,6 +20,10 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
     reset,
   } = useForm({
     mode: "onSubmit",
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
   const [createUser, setCreateUser] = useState(false);
   const [hasAlunoError, setHasAlunoError] = useState(false);
@@ -54,10 +58,11 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: CredenciaisTypes) => {
+    console.log({ data });
     const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
     const hasAluno = alunos.find(
-      (aluno: any) => aluno.username === data.username
+      (aluno: CredenciaisTypes) => aluno.username === data.username
     );
     if (hasAluno) {
       handleHasAlunoError();

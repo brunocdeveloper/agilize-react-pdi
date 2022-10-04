@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 import Box from "../../../components/Box/Box";
 import Button from "../../../components/Button/Button";
@@ -11,7 +11,6 @@ import Stack from "@mui/material/Stack";
 import { StyledContainer, StyledText } from "./AplicarProvas.style";
 import { AlunoTypes } from "../../Login/Login.types";
 import { ProvaAtribuidaTypes, ProvaType } from "../../Aluno/Aluno.types";
-import { ProvaJaAtribuidaType } from "./AplicarProvas.types";
 
 const AplicarProvas = () => {
   const [alunos, setAlunos] = useState<AlunoTypes[]>([]);
