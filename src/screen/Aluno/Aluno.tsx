@@ -11,20 +11,20 @@ import { useUserContext } from "../../context/UserContext";
 import { useFetch } from "../../utils/useFetch/useFetch";
 import { Container } from "../Login/Login.style";
 import { AlternativeInput, StyledText } from "./Aluno.style";
-
-interface ProvaType {
-  id: number;
-  nomeProva: string;
-  questoes: [];
-  selected: boolean;
-}
+import {
+  AlternativaType,
+  ProvaAtribuidaTypes,
+  ProvaType,
+  QuestoesType,
+  SerializeDataTypes,
+} from "./Aluno.types";
 
 const Aluno = () => {
   const [provas, setProvas] = useState([]);
   const [selectedProva, setSelectedProva] = useState<ProvaType>();
   const theme = useTheme();
   const { user, isStartedProva, setIsStartedProva } = useUserContext();
-  const { watch, setValue, trigger, getValues } = useForm();
+  const { watch, setValue, getValues } = useForm();
   const { setCount, Count } = useCountDown(60);
   const [erroConcluirProva, setErrorConcluirProva] = useState(false);
 
@@ -60,7 +60,7 @@ const Aluno = () => {
       localStorage.getItem("provasAtribuidas") || "[]"
     );
     const [provas] = provasJaAtribuidas.filter(
-      (prova: any) => prova.username === user
+      (prova: ProvaAtribuidaTypes) => prova.username === user
     );
     setProvas(provas.provas);
   }, []);
@@ -69,12 +69,12 @@ const Aluno = () => {
     setSelectedProva(prova);
   };
 
-  const shuffleQuestoes = (array: any) => {
+  const shuffleQuestoes = (array: AlternativaType[]) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
   const serializeData = useMemo(() => {
-    return data?.questoes.map((questoes: any) => ({
+    return data?.questoes.map((questoes: QuestoesType) => ({
       questao: questoes.questao,
       tema: questoes.tema,
       chaveQuestao: questoes.chaveQuestao,
@@ -89,7 +89,9 @@ const Aluno = () => {
   }, [data]);
 
   const verificaQuestoesPreenchidas = () => {
-    return serializeData.some((prova: any) => !getValues(prova.chaveQuestao));
+    return serializeData.some(
+      (prova: QuestoesType) => !getValues(prova.chaveQuestao)
+    );
   };
 
   const concluirProva = async () => {
@@ -102,7 +104,7 @@ const Aluno = () => {
 
   const apuraQuestoes = () => {
     const acertos = serializeData?.filter(
-      (prova: any) => getValues(prova.chaveQuestao)?.isCorreta === true
+      (prova: QuestoesType) => getValues(prova.chaveQuestao)?.isCorreta === true
     );
 
     const PONTUACAO_MAXIMA = 10;
@@ -182,7 +184,7 @@ const Aluno = () => {
       )}
 
       {serializeData &&
-        serializeData.map((questao: any) => (
+        serializeData.map((questao: SerializeDataTypes) => (
           <Container width={750} mt={4} paddingX={4} paddingY={4} height="100%">
             <Box display="flex" alignItems="center">
               <BookIcon width={30} height={30} fill={theme.colors.bookIcon} />
@@ -206,7 +208,7 @@ const Aluno = () => {
               />
             </Box>
             <Box mt="15px" display="flex" flexDirection="column">
-              {questao.alternativas.map((alternativa: any, index: any) => (
+              {questao.alternativas.map((alternativa: AlternativaType) => (
                 <AlternativeInput
                   value={alternativa.alternativa}
                   onClick={() => {

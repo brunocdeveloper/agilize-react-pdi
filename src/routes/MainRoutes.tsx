@@ -1,4 +1,3 @@
-import React from "react";
 import { useUserContext } from "../context/UserContext";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";

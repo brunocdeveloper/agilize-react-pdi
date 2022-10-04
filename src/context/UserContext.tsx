@@ -1,19 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
-interface UserProviderProps {
-  children: React.ReactElement | React.ReactNode;
-}
-
-interface UserContexType {
-  isLoged: boolean;
-  setIsLoged: (t: boolean) => void;
-  user: string;
-  setUser: (t: string) => void;
-  isAntiTheme: boolean;
-  setIsAntiTheme: (t: boolean) => void;
-  isStartedProva: boolean;
-  setIsStartedProva: (t: boolean) => void;
-}
+import { UserContexType, UserProviderProps } from "./UserContext.types";
 
 export const UserContext = createContext({} as UserContexType);
 export const useUserContext = () => useContext(UserContext);
