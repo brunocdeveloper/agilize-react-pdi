@@ -9,15 +9,21 @@ import { Container } from "../../Login/Login.style";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { StyledContainer, StyledText } from "./AplicarProvas.style";
+import { AlunoTypes } from "../../Login/Login.types";
+import { ProvaAtribuidaTypes, ProvaType } from "../../Aluno/Aluno.types";
+import { ProvaJaAtribuidaType } from "./AplicarProvas.types";
 
 const AplicarProvas = () => {
-  const [alunos, setAlunos] = useState<any>([]);
-  const [provas, setProvas] = useState<any>([]);
+  const [alunos, setAlunos] = useState<AlunoTypes[]>([]);
+  const [provas, setProvas] = useState<ProvaType[]>([]);
   const [isProvaAtribuida, setIsProvaAtribuida] = useState(false);
   const [testesAtribuidos, setTestesAtribuidos] = useState<any>([]);
   const theme = useTheme();
-  const selectedAluno = alunos.find((aluno: any) => aluno?.selected)?.username;
-  const selectedProvas = provas.find((prova: any) => prova?.selected);
+  const selectedAluno = alunos.find(
+    (aluno: AlunoTypes) => aluno?.selected
+  )?.username;
+  const selectedProvas = provas.find((prova: ProvaType) => prova?.selected);
+
   const isSelectedProvaAndAluno = selectedAluno && selectedProvas;
 
   const handleSuccesCreate = () => {
@@ -41,9 +47,9 @@ const AplicarProvas = () => {
     onSuccess: () => {
       handleSuccesCreate();
       const selectedAluno = alunos.find(
-        (aluno: any) => aluno?.selected
+        (aluno: AlunoTypes) => aluno?.selected
       )?.username;
-      const selectedProvas = provas.find((prova: any) => prova?.selected);
+      const selectedProvas = provas.find((prova: ProvaType) => prova?.selected);
 
       const provasAtribuidas = JSON.parse(
         localStorage.getItem("provasAtribuidas") || "[]"
@@ -63,11 +69,11 @@ const AplicarProvas = () => {
       }
 
       const hasAlunoAtribuido = provasAtribuidas.find(
-        (estudante: any) => estudante.username === selectedAluno
+        (estudante: AlunoTypes) => estudante.username === selectedAluno
       );
 
       const hasProvaAtribuida = hasAlunoAtribuido?.provas.some(
-        (prova: any) => prova.nomeProva === selectedProvas.nomeProva
+        (prova: ProvaType) => prova.nomeProva === selectedProvas?.nomeProva
       );
 
       if (hasProvaAtribuida) {
@@ -100,9 +106,9 @@ const AplicarProvas = () => {
     },
   });
 
-  const handleSelectUser = (aluno: any) => {
+  const handleSelectUser = (aluno: AlunoTypes) => {
     setAlunos(
-      alunos.map((estudante: any) => ({
+      alunos.map((estudante: AlunoTypes) => ({
         ...estudante,
         selected: false,
         ...(aluno.username === estudante.username && {
@@ -114,7 +120,7 @@ const AplicarProvas = () => {
 
   const handleSelectProva = (teste: any) => {
     setProvas(
-      provas.map((prova: any) => ({
+      provas.map((prova) => ({
         ...prova,
         selected: false,
         ...(prova.nomeProva === teste.nomeProva && {
@@ -141,7 +147,7 @@ const AplicarProvas = () => {
             />
           </Box>
           <Box mt={24} scrollY height={400}>
-            {alunos?.map((aluno: any) => (
+            {alunos?.map((aluno: AlunoTypes) => (
               <Box mt={3}>
                 <StyledText
                   onClick={() => handleSelectUser(aluno)}
@@ -167,7 +173,7 @@ const AplicarProvas = () => {
             />
           </Box>
           <Box mt={24} scrollY height={400}>
-            {provas?.map((prova: any) => (
+            {provas?.map((prova: ProvaType) => (
               <Box mt={3}>
                 <StyledText
                   onClick={() => handleSelectProva(prova)}
@@ -193,7 +199,7 @@ const AplicarProvas = () => {
             />
           </Box>
           <Box mt={24} scrollY height={400}>
-            {testesAtribuidos?.map((prova: any) => (
+            {testesAtribuidos?.map((prova: ProvaAtribuidaTypes) => (
               <Box mt={4}>
                 <Text
                   fontWeight={700}
@@ -202,7 +208,7 @@ const AplicarProvas = () => {
                   color={theme.colors.signUp.singUpText}
                   fontSize={18}
                 />
-                {prova?.provas.map((licao: any) => (
+                {prova?.provas.map((licao: ProvaType) => (
                   <Text
                     ml={15}
                     mt={2}

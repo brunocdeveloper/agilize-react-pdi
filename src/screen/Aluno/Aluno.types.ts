@@ -28,7 +28,7 @@ export interface ProvaType {
   id: number;
   nomeProva: string;
   questoes: QuestoesType[];
-  selected: boolean;
+  selected?: boolean;
 }
 export interface ProvaAtribuidaTypes {
   username: string;
