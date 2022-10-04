@@ -2,11 +2,11 @@ export interface TextAreaProps {
   error?: string;
 }
 
-export interface ContainerDeCadastroProps {
+export interface CadastroDeQuestoesProps {
   setQuestoesCadastradas: (data: any) => void;
 }
 
-export interface ContainerListaQuestoesProps {
+export interface CadastroDeProvasProps {
   questoesCadastradas: any;
   setQuestoesCadastradas: (data: any) => void;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTheme } from "styled-components";
 import Box from "../../../components/Box/Box";
 import Button from "../../../components/Button/Button";

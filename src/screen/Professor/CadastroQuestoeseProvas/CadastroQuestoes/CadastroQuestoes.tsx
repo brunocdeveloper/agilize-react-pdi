@@ -1,20 +1,20 @@
 import { Controller, useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
-import Box from "../../../components/Box/Box";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import { Label } from "../../../components/Input/Input.styles";
-import Text from "../../../components/Text/Text";
-import { Container } from "../../Login/Login.style";
+import Box from "../../../../components/Box/Box";
+import Button from "../../../../components/Button/Button";
+import Input from "../../../../components/Input/Input";
+import { Label } from "../../../../components/Input/Input.styles";
+import Text from "../../../../components/Text/Text";
+import { Container } from "../../../Login/Login.style";
 import { TextArea } from "./CadastroQuestoes.style";
-import { ContainerDeCadastroProps } from "./CadastroQuestoes.types";
+import { CadastroDeQuestoesProps } from "./CadastroQuestoes.types";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
-import { useFetch } from "../../../utils/useFetch/useFetch";
+import { useFetch } from "../../../../utils/useFetch/useFetch";
 import { CircularProgress } from "@mui/material";
 
-const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
+const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
   const { setQuestoesCadastradas } = props;
   const theme = useTheme();
   const {
@@ -97,7 +97,7 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     doFetch();
   };
 
@@ -267,4 +267,4 @@ const ContainerDeCadastro = (props: ContainerDeCadastroProps) => {
   );
 };
 
-export default ContainerDeCadastro;
+export default CadastroDeQuestoes;

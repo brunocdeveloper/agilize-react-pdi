@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import Box from "../../../components/Box/Box";
+import Box from "../../../../components/Box/Box";
 import { TextAreaProps } from "./CadastroQuestoes.types";
 
 export const TextArea: any = styled.textarea<TextAreaProps>`

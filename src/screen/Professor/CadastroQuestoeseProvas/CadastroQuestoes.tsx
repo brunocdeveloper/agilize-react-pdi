@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Box from "../../../components/Box/Box";
-import { Container } from "./CadastroQuestoes.style";
-import ContainerDeCadastro from "./ContainerDeCadastro";
-import ContainerListaDeQuestoes from "./ContainerListaDeQuestoes";
+import { Container } from "./CadastroQuestoes/CadastroQuestoes.style";
+import CadastroDeProvas from "./CadastroDeProvas/CadastroDeProvas";
+import CadastroDeQuestoes from "./CadastroQuestoes/CadastroQuestoes";
 
 const CadastroQuestoes: React.FC = () => {
   const [questoesCadastradas, setQuestoesCadastradas] = useState<any>([]);
@@ -14,9 +13,9 @@ const CadastroQuestoes: React.FC = () => {
 
   return (
     <Container>
-      <ContainerDeCadastro setQuestoesCadastradas={setQuestoesCadastradas} />
+      <CadastroDeQuestoes setQuestoesCadastradas={setQuestoesCadastradas} />
 
-      <ContainerListaDeQuestoes
+      <CadastroDeProvas
         setQuestoesCadastradas={setQuestoesCadastradas}
         questoesCadastradas={questoesCadastradas}
       />

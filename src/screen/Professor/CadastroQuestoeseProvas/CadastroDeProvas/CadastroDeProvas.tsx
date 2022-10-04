@@ -1,19 +1,20 @@
 import { CircularProgress } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
-import TrashIcon from "../../../assets/TrashIcon";
-import Box from "../../../components/Box/Box";
-import Button from "../../../components/Button/Button";
-import Input from "../../../components/Input/Input";
-import Text from "../../../components/Text/Text";
-import { useFetch } from "../../../utils/useFetch/useFetch";
-import { Container } from "../../Login/Login.style";
-import { ContainerListaQuestoesProps } from "./CadastroQuestoes.types";
+import TrashIcon from "../../../../assets/TrashIcon";
+import Box from "../../../../components/Box/Box";
+import Button from "../../../../components/Button/Button";
+import Input from "../../../../components/Input/Input";
+import Text from "../../../../components/Text/Text";
+import { useFetch } from "../../../../utils/useFetch/useFetch";
+import { Container } from "../../../Login/Login.style";
+import { CadastroDeProvasProps } from "../CadastroQuestoes/CadastroQuestoes.types";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
+import { QuestoesType } from "../../../Aluno/Aluno.types";
 
-const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
+const CadastroDeProvas = (props: CadastroDeProvasProps) => {
   const { questoesCadastradas, setQuestoesCadastradas } = props;
   const theme = useTheme();
   const {
@@ -71,14 +72,18 @@ const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
     },
   });
 
-  const deleteQuestao = (id: string) => {
+  const deleteQuestao = (id: string | number) => {
     const questoes = localStorage.getItem("questoes") || "[]";
     const parseQuestoes = JSON.parse(questoes);
     localStorage.setItem(
       "questoes",
-      JSON.stringify(parseQuestoes.filter((item: any) => item.id !== id))
+      JSON.stringify(
+        parseQuestoes.filter((item: QuestoesType) => item.id !== id)
+      )
     );
-    setQuestoesCadastradas(parseQuestoes.filter((item: any) => item.id !== id));
+    setQuestoesCadastradas(
+      parseQuestoes.filter((item: QuestoesType) => item.id !== id)
+    );
   };
 
   const createProva = () => {
@@ -103,7 +108,7 @@ const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
         justifyContent="space-between"
       >
         <Box height={500} scrollY>
-          {questoesCadastradas.map((questions: any, index: any) => (
+          {questoesCadastradas.map((questions: QuestoesType, index: number) => (
             <Box
               mt={15}
               display="flex"
@@ -175,4 +180,4 @@ const ContainerListaDeQuestoes = (props: ContainerListaQuestoesProps) => {
   );
 };
 
-export default ContainerListaDeQuestoes;
+export default CadastroDeProvas;

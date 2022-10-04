@@ -18,7 +18,7 @@ export interface QuestoesType {
   alternativaFalsaC: string;
   alternativaFalsaD: string;
   chaveQuestao: string;
-  id: number;
+  id: number | string;
   questao: string;
   questaoCorreta: string;
   tema: string;
