@@ -10,7 +10,7 @@ const Professor = () => {
   const [password, setPassword] = useState("");
   const [stepProfessor, setStepProfessor] = useState("aluno");
 
-  const saveAutentication = (event: any) => {
+  const saveAutentication = () => {
     const credentials = {
       username,
       password,
@@ -19,7 +19,6 @@ const Professor = () => {
 
     setUsername("");
     setPassword("");
-    event.preventDefault();
   };
 
   return (
@@ -36,7 +35,7 @@ const Professor = () => {
           password={password}
           setPassword={setPassword}
           setUsername={setUsername}
-          saveAutentication={(e) => saveAutentication(e)}
+          saveAutentication={saveAutentication}
         />
       )}
 
