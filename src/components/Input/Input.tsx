@@ -8,6 +8,7 @@ const Input = (props: InputProps) => {
     <div>
       {label && <Label>{label}</Label>}
       <InputText
+        data-testid="inputText"
         type="text"
         value={value}
         {...rest}

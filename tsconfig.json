@@ -23,7 +23,7 @@
   "include": [
     "src/**/*",
     "src/__tests__",
-    "jest.config.js"
+    "jest.config.tssjss"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
