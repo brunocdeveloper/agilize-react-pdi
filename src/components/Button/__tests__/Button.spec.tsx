@@ -1,5 +1,5 @@
 import { renderWithTheme } from "../../../utils/testHelpers";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Button from "../Button";
 import Text from "../../Text/Text";
 describe("Button component", () => {

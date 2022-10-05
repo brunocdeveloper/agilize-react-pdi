@@ -22,7 +22,12 @@ const Login = () => {
     getValues,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
   const [isProfessor, setIsProfessor] = useState(true);
   const username = watch("username");
   const password = watch("password");
@@ -97,6 +102,7 @@ const Login = () => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="usernameId"
               onChange={onChange}
               label={
                 (isProfessor && "Usuário do professor") || "Usuário do aluno"
@@ -117,6 +123,7 @@ const Login = () => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="passwordId"
               onChange={onChange}
               label={(isProfessor && "Senha do professor") || "Senha do aluno"}
               error={errors?.password?.message}

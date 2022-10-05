@@ -7,7 +7,9 @@ describe("Input component", () => {
     renderWithTheme(<Input label="Input label" />);
 
     expect(screen.getByText("Input label"));
-    userEvent.type(screen.getByTestId("inputText"), "testando");
+    fireEvent.change(screen.getByTestId("inputText"), {
+      target: { value: "testando" },
+    });
 
     await ensureRender();
   });
