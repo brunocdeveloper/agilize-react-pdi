@@ -180,4 +180,65 @@ describe("Professor screen", () => {
 
     expect(mockAxios.post).toHaveBeenCalledWith("/criar-prova");
   });
+
+  it("apply tests correctly", async () => {
+    window.document.getSelection = jest.fn();
+
+    await waitFor(() =>
+      localStorageMock.setItem(
+        "alunos",
+        JSON.stringify([
+          {
+            username: "fulano",
+            password: "fulano",
+            isAluno: true,
+          },
+        ])
+      )
+    );
+
+    await waitFor(() =>
+      localStorageMock.setItem(
+        "provas",
+        JSON.stringify([
+          {
+            nomeProva: "Front-end",
+            id: 1664905433138,
+            questoes: [
+              {
+                chaveQuestao: "questao1",
+                questao:
+                  "Qual propriedade altera o estilo de um elemento ao passar o mouse ?",
+                tema: "Estilização",
+                questaoCorreta: "hover",
+                alternativaFalsaA: "mouseover",
+                alternativaFalsaB: "onPress",
+                alternativaFalsaC: "background-color",
+                alternativaFalsaD: "border-width",
+                id: 1664905425486,
+              },
+            ],
+          },
+        ])
+      )
+    );
+
+    renderWithRoute(<Professor />);
+
+    await waitFor(() => userEvent.click(screen.getByTestId("apliqueProvasId")));
+    await ensureRender();
+    expect(screen.getByText("Selecione um aluno"));
+    expect(screen.getByText("Selecione a prova a ser aplicada"));
+    expect(screen.getByText("Provas atribuidas"));
+
+    expect(screen.getByText("fulano"));
+    expect(screen.getByText("Front-end"));
+
+    fireEvent.click(screen.getByText("fulano"));
+    fireEvent.click(screen.getByText("Front-end"));
+
+    fireEvent.click(screen.getByText("Atribuir prova"));
+
+    expect(mockAxios.post).toHaveBeenCalledWith("/atribuir-prova");
+  });
 });
