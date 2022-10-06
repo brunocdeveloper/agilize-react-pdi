@@ -142,6 +142,7 @@ const CadastroDeProvas = (props: CadastroDeProvasProps) => {
               rules={{ required: "Campo obrigatório" }}
               render={({ field: { onChange, value } }) => (
                 <Input
+                  data-testid="cadastrarProvaId"
                   onChange={onChange}
                   value={value}
                   label="Digite o nome da prova"

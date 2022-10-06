@@ -12,7 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useFetch } from "../../../utils/useFetch/useFetch";
 import { CircularProgress } from "@mui/material";
 
-const CadastroAluno = (props: CadastroAlunosProps) => {
+const CadastroAluno = () => {
   const {
     handleSubmit,
     control,
@@ -59,7 +59,6 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
   });
 
   const onSubmit = (data: CredenciaisTypes) => {
-    console.log({ data });
     const alunos = JSON.parse(localStorage.getItem("alunos") || "[]");
     const hasAluno = alunos.find(
       (aluno: CredenciaisTypes) => aluno.username === data.username
@@ -109,6 +108,7 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="usernameId"
               onChange={onChange}
               value={value}
               label="Usuário do aluno"
@@ -127,6 +127,7 @@ const CadastroAluno = (props: CadastroAlunosProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="passwordId"
               onChange={onChange}
               value={value}
               label="Senha do aluno"

@@ -37,6 +37,7 @@ const StepIndicator = (props: StepIndicatorProps) => {
       </Container>
       <Container onClick={() => setSteperProfessor("questoes")}>
         <Text
+          data-testid="cadastreQuestoesId"
           ml={0.8}
           text="Cadastre questões"
           fontSize={15}

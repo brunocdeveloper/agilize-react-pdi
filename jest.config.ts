@@ -35,3 +35,12 @@ module.exports = {
   },
   moduleDirectories: ["node_modules", "src"],
 };
+
+(global as any).document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: "BODY",
+    ownerDocument: document,
+  },
+});

@@ -29,15 +29,7 @@ const Professor = () => {
           setSteperProfessor={setStepProfessor}
         />
       </Box>
-      {stepProfessor === "aluno" && (
-        <CadastroAluno
-          username={username}
-          password={password}
-          setPassword={setPassword}
-          setUsername={setUsername}
-          saveAutentication={saveAutentication}
-        />
-      )}
+      {stepProfessor === "aluno" && <CadastroAluno />}
 
       {stepProfessor === "questoes" && <CadastroQuestoes />}
       {stepProfessor === "aplicarProvas" && <AplicarProvas />}

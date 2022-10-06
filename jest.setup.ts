@@ -37,3 +37,12 @@ console.error = jest.fn((...args) => {
     // consoleError(...args);
   }
 });
+
+(global as any).document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: "BODY",
+    ownerDocument: document,
+  },
+});

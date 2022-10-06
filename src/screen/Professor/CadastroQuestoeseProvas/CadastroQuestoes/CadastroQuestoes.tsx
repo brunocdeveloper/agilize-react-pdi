@@ -119,6 +119,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <TextArea
+              data-testid="questaoId"
               onChange={onChange}
               error={errors?.questao?.message}
               placeholder={errors?.questao?.message}
@@ -134,6 +135,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="temaId"
               label="Digite aqui o tema da questão"
               width="100%"
               height={40}
@@ -152,6 +154,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testId="questaoCorretaId"
               onChange={onChange}
               value={value}
               label="Digite aqui a alternativa correta"
@@ -171,6 +174,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="alternativaFalsaAId"
               onChange={onChange}
               value={value}
               label="Digite abaixo qual serão as alternativas falsas"
@@ -190,6 +194,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="alternativaFalsaBId"
               onChange={onChange}
               value={value}
               width="100%"
@@ -208,6 +213,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="alternativaFalsaCId"
               onChange={onChange}
               value={value}
               width="100%"
@@ -226,6 +232,7 @@ const CadastroDeQuestoes = (props: CadastroDeQuestoesProps) => {
           rules={{ required: "Campo obrigatório" }}
           render={({ field: { onChange, value } }) => (
             <Input
+              data-testid="alternativaFalsaDId"
               onChange={onChange}
               value={value}
               width="100%"

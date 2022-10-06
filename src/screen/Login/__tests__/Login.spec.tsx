@@ -4,10 +4,8 @@ import {
   renderWithRoute,
 } from "../../../utils/testHelpers";
 import Login from "../Login";
-import { act, fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import axios from "axios";
-
 describe("Login screen", () => {
   it("render login correctly", () => {
     renderWithRoute(<Login />);
