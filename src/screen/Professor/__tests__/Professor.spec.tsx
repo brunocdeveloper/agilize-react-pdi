@@ -6,6 +6,7 @@ import {
 } from "../../../utils/testHelpers";
 import Professor from "../Professor";
 import userEvent from "@testing-library/user-event";
+import { localStorageMock } from "../../../utils/JestLocalStorage/JestLocalStorage.js";
 
 describe("Professor screen", () => {
   it("render options header correctly", () => {
@@ -100,6 +101,26 @@ describe("Professor screen", () => {
 
   it("register test correctly", async () => {
     window.document.getSelection = jest.fn();
+
+    await waitFor(() =>
+      localStorageMock.setItem(
+        "questoes",
+        JSON.stringify([
+          {
+            alternativaFalsaA: "estado",
+            alternativaFalsaB: "hover",
+            alternativaFalsaC: "border-color",
+            alternativaFalsaD: "color",
+            chaveQuestao: "questao1",
+            id: 123456,
+            questao: "Qual a propriedade que muda a cor de fundo de um elmento",
+            questaoCorreta: "background-color",
+            tema: "estilização",
+          },
+        ])
+      )
+    );
+
     renderWithRoute(<Professor />);
 
     await waitFor(() =>
