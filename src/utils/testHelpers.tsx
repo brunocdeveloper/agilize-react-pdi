@@ -5,6 +5,17 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { AxiosStatic } from "axios";
 
 import { theme } from "../styles/theme";
+import {
+  UserContext,
+  UserProvider,
+  useUserContext,
+} from "../context/UserContext";
+import { useEffect } from "react";
+
+export const MOCK_USER: any = {
+  username: "fulano",
+  password: "fulano",
+};
 
 export const renderWithTheme = (children: React.ReactNode) => {
   (ThemeConsumer as any)._currentValue = theme;
@@ -24,9 +35,33 @@ export const renderWithRoute = (
 ) => {
   // eslint-disable-next-line react/prop-types
   function Wrapper({ children }: any) {
+    const {
+      isLoged,
+      setIsLoged,
+      user,
+      setUser,
+      isAntiTheme,
+      setIsAntiTheme,
+      isStartedProva,
+      setIsStartedProva,
+    } = useUserContext();
+
+    const value = {
+      isLoged,
+      setIsLoged,
+      user: "fulano",
+      setUser,
+      isAntiTheme,
+      setIsAntiTheme,
+      isStartedProva,
+      setIsStartedProva,
+    };
+
     return (
       <ThemeProvider theme={theme}>
-        <HistoryRouter history={history}>{children}</HistoryRouter>;
+        <UserContext.Provider value={value}>
+          <HistoryRouter history={history}>{children}</HistoryRouter>;
+        </UserContext.Provider>
       </ThemeProvider>
     );
   }

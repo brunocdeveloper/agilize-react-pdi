@@ -10,7 +10,7 @@ import Text from "../../components/Text/Text";
 import { useUserContext } from "../../context/UserContext";
 import { useFetch } from "../../utils/useFetch/useFetch";
 import { Container } from "../Login/Login.style";
-import { AlternativeInput, StyledText } from "./Aluno.style";
+import { Alternative, StyledText } from "./Aluno.style";
 import {
   AlternativaType,
   ProvaAtribuidaTypes,
@@ -23,7 +23,8 @@ const Aluno = () => {
   const [provas, setProvas] = useState([]);
   const [selectedProva, setSelectedProva] = useState<ProvaType>();
   const theme = useTheme();
-  const { user, isStartedProva, setIsStartedProva } = useUserContext();
+  const { user } = useUserContext();
+  const [isStartedProva, setIsStartedProva] = useState(true);
   const { watch, setValue, getValues } = useForm();
   const { setCount, Count } = useCountDown(60);
   const [erroConcluirProva, setErrorConcluirProva] = useState(false);
@@ -62,7 +63,7 @@ const Aluno = () => {
     const [provas] = provasJaAtribuidas.filter(
       (prova: ProvaAtribuidaTypes) => prova.username === user
     );
-    setProvas(provas.provas);
+    setProvas(provas?.provas);
   }, []);
 
   const selectProva = (prova: ProvaType) => {
@@ -209,8 +210,7 @@ const Aluno = () => {
             </Box>
             <Box mt="15px" display="flex" flexDirection="column">
               {questao.alternativas.map((alternativa: AlternativaType) => (
-                <AlternativeInput
-                  value={alternativa.alternativa}
+                <Alternative
                   onClick={() => {
                     setValue(questao.chaveQuestao, alternativa);
                   }}
@@ -222,7 +222,9 @@ const Aluno = () => {
                     alternativa.alternativa
                   }
                   readOnly
-                />
+                >
+                  {alternativa.alternativa}
+                </Alternative>
               ))}
             </Box>
           </Container>

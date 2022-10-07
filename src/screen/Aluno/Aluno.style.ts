@@ -16,7 +16,7 @@ export const StyledText = styled(Text)<{ selected?: boolean }>`
     `}
 `;
 
-export const AlternativeInput = styled.input<AlternativeInputType>`
+export const Alternative: any = styled.p<AlternativeInputType>`
   ${margin}
 
   background-color: ${({ backgroundColor, theme }) =>

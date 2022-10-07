@@ -6,21 +6,7 @@ import CadastroQuestoes from "./CadastroQuestoeseProvas/CadastroQuestoes";
 import StepIndicator from "./StepIndicator/StepIndicator";
 
 const Professor = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [stepProfessor, setStepProfessor] = useState("aluno");
-
-  const saveAutentication = () => {
-    const credentials = {
-      username,
-      password,
-    };
-    localStorage.setItem("aluno", JSON.stringify(credentials));
-
-    setUsername("");
-    setPassword("");
-  };
-
   return (
     <Box>
       <Box display="flex" justifyContent="center">

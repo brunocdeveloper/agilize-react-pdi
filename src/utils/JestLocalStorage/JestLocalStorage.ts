@@ -1,16 +1,19 @@
 export const localStorageMock = (function () {
   let store = {};
   return {
-    getItem(key) {
+    getItem(key: string) {
+      // @ts-ignore
       return store[key];
     },
-    setItem(key, value) {
+    setItem(key: string, value: string) {
+      // @ts-ignore
       store[key] = value;
     },
     clear() {
       store = {};
     },
-    removeItem(key) {
+    removeItem(key: string) {
+      // @ts-ignore
       delete store[key];
     },
   };

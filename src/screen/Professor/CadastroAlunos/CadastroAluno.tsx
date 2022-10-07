@@ -161,7 +161,7 @@ const CadastroAluno = () => {
 
       {createUser && (
         <Stack sx={{ width: "100%" }} mt={3}>
-          <Alert severity="success">{data.message}</Alert>
+          <Alert severity="success">{data?.message}</Alert>
         </Stack>
       )}
 

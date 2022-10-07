@@ -6,7 +6,7 @@ import {
 } from "../../../utils/testHelpers";
 import Professor from "../Professor";
 import userEvent from "@testing-library/user-event";
-import { localStorageMock } from "../../../utils/JestLocalStorage/JestLocalStorage.js";
+import { localStorageMock } from "../../../utils/JestLocalStorage/JestLocalStorage";
 
 describe("Professor screen", () => {
   it("render options header correctly", () => {
@@ -22,6 +22,12 @@ describe("Professor screen", () => {
   });
 
   it("create studant correctly", async () => {
+    window.document.getSelection = jest.fn();
+
+    localStorageMock.setItem(
+      "alunos",
+      JSON.stringify([{ username: "fulano", password: "fulano" }])
+    );
     mockAxios.post.mockImplementation(async (url) => {
       return {
         message: "",
