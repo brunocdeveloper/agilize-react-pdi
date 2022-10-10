@@ -275,9 +275,9 @@ const Aluno = () => {
               mt={18}
               text={`Você acertou ${
                 apuraQuestoes().acertos
-              } questões e fez um total de ${
-                apuraQuestoes().pontuacaoTotal
-              } pontos`}
+              } questões e fez um total de ${apuraQuestoes().pontuacaoTotal.toFixed(
+                2
+              )} pontos`}
               color={theme.colors.signUp.singUpText}
               fontSize={20}
             />
